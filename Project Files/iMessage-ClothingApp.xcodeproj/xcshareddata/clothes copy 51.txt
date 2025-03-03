@@ -1,0 +1,907 @@
+iMessage-Clothing-App/
+├── iMessage-Extension/
+│   ├── ClothingApp/
+│   │   ├── Authentication/
+│   │   │   ├── AuthenticationService.swift
+│   │   │   ├── AuthenticationView.swift
+│   │   │   ├── User.swift
+│   │   ├── Camera/
+│   │   │   ├── CameraView.swift
+│   │   │   ├── ClothingCamera.swift
+│   │   │   ├── ClothingUploadForm.swift
+│   │   ├── Profile/
+│   │   │   ├── ProfileView.swift
+│   │   │   ├── EditProfileView.swift
+│   │   │   ├── ClothingGridView.swift
+│   │   ├── Search/
+│   │   │   ├── SearchView.swift
+│   │   │   ├── VisualSearchView.swift
+│   │   │   ├── SearchResultsView.swift
+│   │   │   ├── ImageSearchResultsView.swift
+│   │   │   ├── ClothingMatchRow.swift
+│   │   │   ├── ClothingPurchaseRow.swift
+│   │   │   ├── SearchBar.swift
+│   │   ├── Social/
+│   │   │   ├── SocialView.swift
+│   │   │   ├── SocialManager.swift
+│   │   │   ├── UserRow.swift
+│   │   ├── MessagesViewController.swift
+│   │   ├── ClothingApp.entitlements
+│   │   ├── Info.plist
+│   │   ├── MainInterface.storyboard
+│   ├── Assets.xcassets/
+│   │   ├── AppIcon.appiconset/
+│   │   │   ├── Contents.json
+│   │   │   ├── ... (App Icons)
+│   │   ├── AccentColor.colorset/
+│   │   │   ├── Contents.json
+│   ├── ClothingApp.xcodeproj/
+│   │   ├── project.pbxproj
+│   │   ├── project.xcworkspace/
+│   │   │   ├── contents.xcworkspacedata
+├── Backend-Services/
+│   ├── Clothing-Service/
+│   │   ├── ClothingService.swift
+│   ├── Social-Service/
+│   │   ├── SocialService.swift
+│   ├── Search-Service/
+│   │   ├── SearchService.swift
+│   ├── Backend.swift
+├── Shared-Frameworks/
+│   ├── ClothingKit/
+│   │   ├── ClothingItem.swift
+│   │   ├── ClothingMatch.swift
+│   │   ├── ClothingMetadata.swift
+│   │   ├── ClothingService.swift
+│   │   ├── CommercialMatch.swift
+│   ├── ImageProcessingKit/
+│   │   ├── ImageProcessor.swift
+│   │   ├── ImageUploader.swift
+│   │   ├── ImageCache.swift
+│   │   ├── UIImage+Extensions.swift
+iMessage-Extension/ClothingApp/Authentication/AuthenticationService.swift
+
+Swift
+
+import Foundation
+
+class AuthenticationService {
+    static let shared = AuthenticationService()
+    
+    var currentUser: User? {
+        // Implement logic to retrieve/store user from UserDefaults or CloudKit
+        return nil
+    }
+    
+    func authenticate(completion: @escaping (User?) -> Void) {
+        // Implement Sign in with Apple or phone number auth.
+        // For simplicity, create a dummy user
+        let dummyUser = User(id: "1", username: "TestUser", avatarURL: URL(string: "https://example.com/avatar.png")!, closet: [])
+        currentUser = dummyUser
+        completion(dummyUser)
+    }
+    
+    func signOut() {
+        currentUser = nil
+        // Implement sign out logic
+    }
+}
+iMessage-Extension/ClothingApp/Authentication/AuthenticationView.swift
+
+Swift
+
+import SwiftUI
+
+struct AuthenticationView: View {
+    let onAuthComplete: (User) -> Void
+    
+    var body: some View {
+        VStack {
+            Text("Login to Clothing App")
+                .font(.title)
+            Button("Sign In") {
+                AuthenticationService.shared.authenticate { user in
+                    if let user = user {
+                        onAuthComplete(user)
+                    }
+                }
+            }
+        }
+    }
+}
+iMessage-Extension/ClothingApp/Authentication/User.swift
+
+Swift
+
+import Foundation
+
+struct User: Identifiable, Codable, Hashable {
+    let id: String
+    let username: String
+    let avatarURL: URL
+    let closet: [ClothingItem]
+}
+iMessage-Extension/ClothingApp/Camera/CameraView.swift
+
+Swift
+
+import SwiftUI
+
+struct CameraView: View {
+    @StateObject private var camera = ClothingCamera()
+    @State private var showingSourcePicker = false
+    
+    var body: some View {
+        VStack {
+            if let image = camera.capturedImage {
+                ClothingUploadForm(image: image)
+            } else {
+                Button("Add Clothing") {
+                    showingSourcePicker = true
+                }
+                .confirmationDialog("Select Source", isPresented: $showingSourcePicker) {
+                    Button("Take Photo") { camera.capturePhoto() }
+                    Button("Choose Existing") { camera.pickPhoto() }
+                }
+            }
+        }
+    }
+}
+iMessage-Extension/ClothingApp/Camera/ClothingCamera.swift
+
+Swift
+
+import SwiftUI
+import PhotosUI
+
+class ClothingCamera: NSObject, ObservableObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PHPickerViewControllerDelegate {
+    @Published var capturedImage: UIImage?
+    private var imagePicker = UIImagePickerController()
+    private var picker = PHPickerViewController(configuration: PHPickerConfiguration())
+    
+    override init() {
+        super.init()
+        imagePicker.delegate = self
+        picker.delegate = self
+    }
+    
+    func capturePhoto() {
+        imagePicker.sourceType = .camera
+        UIApplication.shared.windows.first?.rootViewController?.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func pickPhoto() {
+        var config = PHPickerConfiguration()
+        config.filter = .images
+        picker = PHPickerViewController(configuration: config)
+        picker.delegate = self
+        UIApplication.shared.windows.first?.rootViewController?.present(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            capturedImage = image
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        guard let provider = results.first?.itemProvider else { return }
+        if provider.canLoadObject(ofClass: UIImage.self) {
+            provider.loadObject(ofClass: UIImage.self) { image, error in
+                if let image = image as? UIImage {
+                    DispatchQueue.main.async {
+                        self.capturedImage = image
+                    }
+                }
+            }
+        }
+    }
+}
+iMessage-Extension/ClothingApp/Camera/ClothingUploadForm.swift
+
+Swift
+
+import SwiftUI
+
+struct ClothingUploadForm: View {
+    let image: UIImage
+    @State private var description = ""
+    @StateObject private var clothingService = ClothingService()
+    
+    var body: some View {
+        VStack {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
+            
+            TextField("Description", text: $description)
+                .textFieldStyle(.roundedBorder)
+            
+            Button("Upload") {
+                Task {
+                    let metadata = ClothingMetadata(description: description)
+                    try await clothingService.uploadItem(image, metadata: metadata)
+                }
+            }
+        }
+        .padding()
+    }
+}
+iMessage-Extension/ClothingApp/Profile/ProfileView.swift
+
+Swift
+
+import SwiftUI
+
+struct ProfileView: View {
+    @ObservedObject var user: User
+    @State private var showingEditProfile = false
+    
+    var body: some View {
+        VStack {
+            AsyncImage(url: user.avatarURL) { image in
+                image.resizable()
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
+            
+            Text(user.username)
+                .font(.title)
+            
+            Button("Edit Profile") {
+                showingEditProfile = true
+            }
+            .sheet(isPresented: $showingEditProfile) {
+                EditProfileView(user: user)
+            }
+            
+            ClothingGridView(items: user.closet)
+        }
+    }
+}
+**iMessage-Extension/ClothingApp/
+
+
+
+
+
+go on and complete the above
+
+
+Swift
+
+// iMessage-Extension/ClothingApp/Profile/EditProfileView.swift
+import SwiftUI
+
+struct EditProfileView: View {
+    @ObservedObject var user: User
+    @Environment(\.presentationMode) var presentationMode
+    @State private var newUsername: String = ""
+    
+    var body: some View {
+        VStack {
+            TextField("Username", text: $newUsername)
+                .textFieldStyle(.roundedBorder)
+                .padding()
+            
+            Button("Save") {
+                // Implement logic to update user data in backend
+                user.username = newUsername
+                presentationMode.wrappedValue.dismiss()
+            }
+            .padding()
+        }
+        .onAppear {
+            newUsername = user.username
+        }
+    }
+}
+
+// iMessage-Extension/ClothingApp/Profile/ClothingGridView.swift
+import SwiftUI
+
+struct ClothingGridView: View {
+    let items: [ClothingItem]
+    
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+                ForEach(items) { item in
+                    AsyncImage(url: item.imageURL) { image in
+                        image.resizable()
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .aspectRatio(contentMode: .fit)
+                }
+            }
+            .padding()
+        }
+    }
+}
+
+// iMessage-Extension/ClothingApp/Search/SearchView.swift
+import SwiftUI
+
+struct SearchView: View {
+    @StateObject private var searcher = ClothingSearcher()
+    @State private var searchText = ""
+    
+    var body: some View {
+        VStack {
+            SearchBar(text: $searchText)
+            
+            if searchText.isEmpty {
+                VisualSearchView()
+            } else {
+                SearchResultsView(results: searcher.results)
+            }
+        }
+    }
+}
+
+// iMessage-Extension/ClothingApp/Search/VisualSearchView.swift
+import SwiftUI
+
+struct VisualSearchView: View {
+    @State private var searchImage: UIImage?
+    @State private var showingImagePicker = false
+    
+    var body: some View {
+        VStack {
+            if let image = searchImage {
+                ImageSearchResultsView(image: image)
+            } else {
+                Button("Search by Photo") {
+                    showingImagePicker = true
+                }
+                .sheet(isPresented: $showingImagePicker) {
+                    ImagePicker(image: $searchImage)
+                }
+            }
+        }
+    }
+}
+
+// iMessage-Extension/ClothingApp/Search/SearchResultsView.swift
+import SwiftUI
+
+struct SearchResultsView: View {
+    let results: [ClothingMatch]
+    
+    var body: some View {
+        List {
+            ForEach(results) { match in
+                ClothingMatchRow(match: match)
+            }
+        }
+    }
+}
+
+// iMessage-Extension/ClothingApp/Search/ImageSearchResultsView.swift
+import SwiftUI
+
+struct ImageSearchResultsView: View {
+    let image: UIImage
+    @StateObject private var searcher = ImageSearcher()
+    
+    var body: some View {
+        Group {
+            if searcher.isSearching {
+                ProgressView()
+            } else {
+                List {
+                    Section("In Your Network") {
+                        ForEach(searcher.socialMatches) { match in
+                            ClothingMatchRow(match: match)
+                        }
+                    }
+                    
+                    Section("Online Retailers") {
+                        ForEach(searcher.commercialMatches) { match in
+                            ClothingPurchaseRow(match: match)
+                        }
+                    }
+                }
+            }
+        }
+        .task {
+            await searcher.search(image)
+        }
+    }
+}
+
+// iMessage-Extension/ClothingApp/Search/ClothingMatchRow.swift
+import SwiftUI
+
+struct ClothingMatchRow: View {
+    let match: ClothingMatch
+    
+    var body: some View {
+        HStack {
+            AsyncImage(url: match.imageURL) { image in
+                image.resizable()
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 60, height: 60)
+            
+            Text(match.description)
+            
+            Spacer()
+        }
+    }
+}
+
+// iMessage-Extension/ClothingApp/Search/ClothingPurchaseRow.swift
+import SwiftUI
+
+struct ClothingPurchaseRow: View {
+    let match: CommercialMatch
+    
+    var body: some View {
+        HStack {
+            AsyncImage(url: match.thumbnailURL) { image in
+                image.resizable()
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 60, height: 60)
+            
+            VStack(alignment: .leading) {
+                Text(match.retailerName)
+                    .font(.caption)
+                Text(match.price)
+                    .font(.headline)
+            }
+            
+            Spacer()
+            
+            Link("Buy", destination: match.purchaseURL)
+                .buttonStyle(.borderedProminent)
+        }
+    }
+}
+
+// iMessage-Extension/ClothingApp/Search/SearchBar.swift
+import SwiftUI
+
+struct SearchBar: View {
+    @Binding var text: String
+    
+    var body: some View {
+        TextField("Search", text: $text)
+            .textFieldStyle(.roundedBorder)
+            .padding()
+    }
+}
+
+// iMessage-Extension/ClothingApp/Social/SocialView.swift
+import SwiftUI
+
+struct SocialView: View {
+    @StateObject private var social = SocialManager()
+    
+    var body: some View {
+        List {
+            Section("Following") {
+                ForEach(social.following) { user in
+                    NavigationLink {
+                        ProfileView(user: user)
+                    } label: {
+                        UserRow(user: user)
+                    }
+                }
+            }
+            
+            Section("Followers") {
+                ForEach(social.followers) { user in
+                    UserRow(user: user)
+                }
+            }
+        }
+        .task {
+            await social.loadSocialGraph()
+        }
+    }
+}
+
+// iMessage-Extension/ClothingApp/Social/SocialManager.swift
+import SwiftUI
+
+class SocialManager: ObservableObject {
+    @Published var following: [User] = []
+    @Published var followers: [User] = []
+    private let socialService = SocialService()
+    
+    func loadSocialGraph() async {
+        do {
+            async let following = socialService.getFollowing()
+            async let followers = socialService.getFollowers()
+            self.following = try await following
+            self.followers = try await followers
+        } catch {
+            print("Error loading social graph: \(error)")
+        }
+    }
+
+    func follow(user:User) async {
+        do{
+            try await socialService.followUser(user.id)
+            await loadSocialGraph()
+        } catch {
+            print("Error following user: \(error)")
+        }
+    }
+
+    func unfollow(user:User) async {
+        do{
+            try await socialService.unfollowUser(user.id)
+            await loadSocialGraph()
+        } catch {
+            print("Error unfollowing user: \(error)")
+        }
+    }
+}
+
+// iMessage-Extension/ClothingApp/Social/UserRow.swift
+import SwiftUI
+
+struct UserRow: View {
+    let user: User
+    @State private var isFollowing = false
+    @StateObject private var socialManager = SocialManager()
+    
+    var body: some View {
+        HStack {
+            AsyncImage(url: user.avatarURL) { image in
+                image.resizable()
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 40, height: 40)
+            
+            Text(user.username)
+            
+            Spacer()
+            
+            Button(isFollowing ? "Following" : "Follow") {
+                toggleFollow()
+            }
+            .onAppear{
+                Task{
+                    await loadFollowingStatus()
+                }
+            }
+        }
+    }
+    
+    private func toggleFollow() {
+        Task {
+            if isFollowing {
+                await socialManager.unfollow(user: user)
+            } else {
+                await socialManager.follow(user: user)
+            }
+            await loadFollowingStatus()
+        }
+    }
+
+    private func loadFollowingStatus() async{
+        let followingUsers = await SocialService().getFollowing()
+        isFollowing = followingUsers.contains(where: {$0.id == user.id})
+    }
+}
+
+// iMessage-Extension/ClothingApp/MessagesViewController.swift
+import Messages
+import SwiftUI
+import ClothingKit
+
+class MessagesViewController: MSMessagesAppViewController {
+    private var currentView: AnyView?
+    private let authService = AuthenticationService.shared
+    
+    override
+
+
+
+
+go on and complete the above
+
+
+Swift
+
+    func willBecomeActive(with conversation: MSConversation) {
+        guard let user = authService.currentUser else {
+            presentAuthenticationFlow()
+            return
+        }
+        presentMainInterface(for: user)
+    }
+    
+    private func presentAuthenticationFlow() {
+        let authView = AuthenticationView { [weak self] user in
+            self?.presentMainInterface(for: user)
+        }
+        presentSwiftUIView(authView)
+    }
+    
+    private func presentMainInterface(for user: User) {
+        let mainView = TabView {
+            ProfileView(user: user)
+                .tabItem { Label("Profile", systemImage: "person") }
+            
+            SearchView()
+                .tabItem { Label("Search", systemImage: "magnifyingglass") }
+            
+            CameraView()
+                .tabItem { Label("Add", systemImage: "plus") }
+            
+            SocialView()
+                .tabItem { Label("Social", systemImage: "person.2") }
+        }
+        presentSwiftUIView(mainView)
+    }
+    
+    private func presentSwiftUIView<Content: View>(_ view: Content) {
+        let hosting = UIHostingController(rootView: view)
+        addChild(hosting)
+        view.addSubview(hosting.view)
+        hosting.view.frame = view.bounds
+        hosting.didMove(toParent: self)
+    }
+}
+
+// Shared-Frameworks/ClothingKit/ClothingItem.swift
+import Foundation
+
+public struct ClothingItem: Identifiable, Codable, Hashable {
+    public let id = UUID()
+    public let imageURL: URL
+    public let metadata: ClothingMetadata
+}
+
+// Shared-Frameworks/ClothingKit/ClothingMatch.swift
+import Foundation
+
+public struct ClothingMatch: Identifiable, Codable, Hashable {
+    public let id = UUID()
+    public let imageURL: URL
+    public let description: String
+}
+
+// Shared-Frameworks/ClothingKit/ClothingMetadata.swift
+import Foundation
+
+public struct ClothingMetadata: Codable, Hashable {
+    public let description: String
+}
+
+// Shared-Frameworks/ClothingKit/ClothingService.swift
+import SwiftUI
+
+public class ClothingService: ObservableObject {
+    @Published public var closet: [ClothingItem] =
+    
+    public func uploadItem(_ image: UIImage, metadata: ClothingMetadata) async throws {
+        let compressedImage = image.resized(to: 1024)
+        let url = try await ImageUploader.upload(image: compressedImage)
+        let newItem = ClothingItem(imageURL: url, metadata: metadata)
+        closet.append(newItem)
+        try await Backend.shared.createClothingItem(newItem)
+    }
+    
+    public func findSimilarItems(to image: UIImage) async throws -> [ClothingMatch] {
+        let embedding = try await ImageProcessor.shared.analyze(image)
+        return try await Backend.shared.searchClothing(embedding: embedding)
+    }
+}
+
+// Shared-Frameworks/ClothingKit/CommercialMatch.swift
+import Foundation
+
+public struct CommercialMatch: Identifiable, Codable, Hashable {
+    public let id = UUID()
+    public let thumbnailURL: URL
+    public let retailerName: String
+    public let price: String
+    public let purchaseURL: URL
+}
+
+// Backend-Services/Clothing-Service/ClothingService.swift
+import Foundation
+
+class ClothingService {
+    func createClothingItem(_ item: ClothingItem) async throws {
+        // Implement logic to store clothing item in backend
+    }
+}
+
+// Backend-Services/Social-Service/SocialService.swift
+import Foundation
+
+class SocialService {
+    func followUser(_ userId: String) async throws {
+        // Implement logic to follow user in backend
+    }
+
+    func unfollowUser(_ userId: String) async throws {
+        // Implement logic to unfollow user in backend
+    }
+
+    func getFollowing() async -> [User] {
+        // Implement logic to retrieve followed users from backend
+        return
+    }
+
+    func getFollowers() async -> [User] {
+        // Implement logic to retrieve followers from backend
+        return
+    }
+}
+
+// Backend-Services/Search-Service/SearchService.swift
+import Foundation
+
+class SearchService {
+    func searchClothing(embedding: ImageEmbedding) async throws -> [ClothingMatch] {
+        // Implement logic to search for clothing matches in backend
+        return
+    }
+}
+
+// Backend-Services/Backend.swift
+import Foundation
+
+class Backend {
+    static let shared = Backend()
+    private let clothingService = ClothingService()
+    private let socialService = SocialService()
+    private let searchService = SearchService()
+    
+    func createClothingItem(_ item: ClothingItem) async throws {
+        try await clothingService.createClothingItem(item)
+    }
+    
+    func followUser(_ userId: String) async throws {
+        try await socialService.followUser(userId)
+    }
+
+    func unfollowUser(_ userId: String) async throws {
+        try await socialService.unfollowUser(userId)
+    }
+    
+    func getFollowing() async -> [User] {
+        return await socialService.getFollowing()
+    }
+    
+    func getFollowers() async -> [User] {
+        return await socialService.getFollowers()
+    }
+    
+    func searchClothing(embedding: ImageEmbedding) async throws -> [ClothingMatch] {
+        return try await searchService.searchClothing(embedding: embedding)
+    }
+}
+
+// Shared-Frameworks/ImageProcessingKit/ImageProcessor.swift
+import UIKit
+import CoreML
+
+public class ImageProcessor {
+    public static let shared = ImageProcessor()
+    private let processorQueue = DispatchQueue(label: "image-processing", qos: .userInitiated)
+    
+    public func analyze(_ image: UIImage) async -> ImageEmbedding {
+        return await withCheckedContinuation { continuation in
+            processorQueue.async {
+                let embedding = self.processImage(image)
+                continuation.resume(returning: embedding)
+            }
+        }
+    }
+    
+    private func processImage(_ image: UIImage) -> ImageEmbedding {
+        // Implement image analysis using CoreML or other methods
+        // For now, return a dummy embedding
+        return ImageEmbedding()
+    }
+}
+
+// Shared-Frameworks/ImageProcessingKit/ImageUploader.swift
+import UIKit
+
+public class ImageUploader {
+    public static func upload(image: UIImage) async throws -> URL {
+        // Implement image upload logic to cloud storage
+        // For now, return a dummy URL
+        return URL(string: "https://example.com/image.png")!
+    }
+}
+
+// Shared-Frameworks/ImageProcessingKit/ImageCache.swift
+import UIKit
+
+public class ImageCache {
+    public static let shared = ImageCache()
+    private let cache = NSCache<NSURL, UIImage>()
+    
+    public func image(for url: URL) -> UIImage? {
+        return cache.object(forKey: url as NSURL)
+    }
+    
+    public func setImage(_ image: UIImage, for url: URL) {
+        cache.setObject(image, forKey: url as NSURL)
+    }
+}
+
+// Shared-Frameworks/ImageProcessingKit/UIImage+Extensions.swift
+import UIKit
+
+extension UIImage {
+    func resized(to maxSize: CGFloat) -> UIImage {
+        let width = self.size.width
+        let height = self.size.height
+        
+        let scaleFactor = max(width, height) / maxSize
+        let newSize = CGSize(width: width / scaleFactor, height: height / scaleFactor)
+        
+        let renderer = UIGraphicsImageRenderer(size: newSize)
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: newSize))
+        }
+    }
+}
+
+// Placeholder for ImageEmbedding struct
+public struct ImageEmbedding: Codable, Hashable {}
+
+// Placeholder for ImagePicker struct
+import SwiftUI
+
+struct ImagePicker: UIViewControllerRepresentable {
+    @Binding var image: UIImage?
+
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
+        // Not needed for this example
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+        let parent: ImagePicker
+
+        init(_ parent: ImagePicker) {
+            self.parent = parent
+        }
+
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let image = info[.originalImage] as? UIImage {
+                parent.image = image
+            }
+            picker.dismiss(animated: true)
+        }
+    }
+}
+Notes:
+
+This is a simplified implementation to showcase the core concepts.
+You'll need to replace the placeholder comments with actual backend integration logic (e.g., using CloudKit, Firebase, or your own server).
+The ImageEmbedding and ImagePicker structs are placeholders. You'll need to implement them based on your image processing and selection methods.
+Ensure you handle errors properly and provide user feedback.
+Thoroughly test the app on a real device or simulator to ensure all functionalities work as expected within iMessage.
+Remember to adhere to Apple's guidelines for iMessage extensions.
+This comprehensive structure and codebase should give you a solid foundation for building your iMessage-exclusive clothing app. Let me know if you have any further questions or need help with specific parts of the implementation.

@@ -1,0 +1,43 @@
+// CloudKit Schema
+{
+    "recordTypes": [
+        {
+            "name": "User",
+            "fields": [
+                {"name": "username", "type": "STRING"},
+                {"name": "displayName", "type": "STRING"},
+                {"name": "email", "type": "STRING"},
+                {"name": "avatarURL", "type": "STRING"},
+                {"name": "joinDate", "type": "TIMESTAMP"},
+                {"name": "followerCount", "type": "INT64"},
+                {"name": "followingCount", "type": "INT64"}
+            ]
+        },
+        {
+            "name": "ClothingItem",
+            "fields": [
+                {"name": "ownerId", "type": "STRING"},
+                {"name": "ownerUsername", "type": "STRING"},
+                {"name": "imageURL", "type": "STRING"},
+                {"name": "thumbnailURL", "type": "STRING"},
+                {"name": "metadata", "type": "STRING"},
+                {"name": "creationDate", "type": "TIMESTAMP"}
+            ],
+            "indexes": [
+                {"name": "byOwner", "fields": ["ownerId"]}
+            ]
+        },
+        {
+            "name": "Follow",
+            "fields": [
+                {"name": "followerId", "type": "STRING"},
+                {"name": "followeeId", "type": "STRING"},
+                {"name": "creationDate", "type": "TIMESTAMP"}
+            ],
+            "indexes": [
+                {"name": "byFollower", "fields": ["followerId"]},
+                {"name": "byFollowee", "fields": ["followeeId"]}
+            ]
+        }
+    ]
+}

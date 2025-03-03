@@ -1,0 +1,104 @@
+// Localizable.strings
+/* 
+  Localizable.strings
+  iMessage Clothing App
+ 
+  Created for the Clothing App.
+*/
+
+// Authentication
+"SIGN_IN" = "Sign In";
+"SIGN_IN_WITH_APPLE" = "Sign in with Apple";
+"AUTHENTICATION_ERROR" = "Authentication failed. Please try again.";
+"WELCOME_MESSAGE" = "Find, share, and discover clothing directly in iMessage";
+"PRIVACY_AGREEMENT" = "By signing in, you agree to our Privacy Policy and Terms of Use.";
+
+// Camera
+"TAKE_PHOTO" = "Take Photo";
+"SELECT_FROM_LIBRARY" = "Select from Library";
+"CAMERA_ACCESS_REQUIRED" = "Camera Access Required";
+"CAMERA_PERMISSION_MESSAGE" = "This app needs access to your camera and photo library to capture and select clothing items.";
+"OPEN_SETTINGS" = "Open Settings";
+"ADD_CLOTHING_ITEM" = "Add Clothing Item";
+"CAMERA" = "Camera";
+"LIBRARY" = "Library";
+
+// Upload Form
+"DESCRIPTION" = "Description";
+"CATEGORY" = "Category";
+"BRAND" = "Brand (optional)";
+"TAGS" = "Tags (comma separated)";
+"UPLOAD" = "Upload";
+"UPLOADING" = "Uploading...";
+"SHARE_IN_CONVERSATION" = "Share in Conversation";
+"CANCEL" = "Cancel";
+"DONE" = "Done";
+
+// Categories
+"TOPS" = "Tops";
+"BOTTOMS" = "Bottoms";
+"OUTERWEAR" = "Outerwear";
+"DRESSES" = "Dresses";
+"SHOES" = "Shoes";
+"ACCESSORIES" = "Accessories";
+"OTHER" = "Other";
+"ALL" = "All";
+
+// Profile
+"MY_CLOSET" = "My Closet";
+"EDIT" = "Edit";
+"EDIT_PROFILE" = "Edit Profile";
+"USERNAME" = "Username";
+"DISPLAY_NAME" = "Display Name";
+"SAVE" = "Save";
+"CLOSET_EMPTY" = "Your closet is empty";
+"NO_CATEGORY_ITEMS" = "No items in this category";
+"ADD_CLOTHING_PROMPT" = "Add clothing items using the camera tab";
+"ADD_CLOTHING" = "Add Clothing";
+"ITEMS" = "Items";
+"FOLLOWERS" = "Followers";
+"FOLLOWING" = "Following";
+
+// Search
+"SEARCH" = "Search";
+"SEARCH_CLOTHING" = "Search clothing...";
+"TEXT" = "Text";
+"VISUAL" = "Visual";
+"TRENDING_CATEGORIES" = "Trending Categories";
+"RECENT_SEARCHES" = "Recent Searches";
+"VISUAL_SEARCH" = "Visual Search";
+"VISUAL_SEARCH_PROMPT" = "Take a picture or select an image to find similar clothing items";
+"SEARCH_WITH_IMAGE" = "Search with this image";
+"CHOOSE_ANOTHER_IMAGE" = "Choose another image";
+"ANALYZING_IMAGE" = "Analyzing image...";
+"SEARCHING" = "Searching...";
+"NO_RESULTS" = "No results found";
+"TRY_CHANGING_SEARCH" = "Try changing your search or filters";
+
+// Visual Search Results
+"SEARCH_IMAGE" = "Search Image";
+"FINDING_MATCHES" = "Finding matches...";
+"FROM_YOUR_NETWORK" = "From Your Network";
+"SHOP_SIMILAR_ITEMS" = "Shop Similar Items";
+"NO_NETWORK_MATCHES" = "No matches found in your network";
+"NO_COMMERCIAL_MATCHES" = "No commercial matches found";
+"MATCH" = "match";
+
+// Social
+"SOCIAL" = "Social";
+"FIND_PEOPLE" = "Find people...";
+"LOADING" = "Loading...";
+"NOT_FOLLOWING_ANYONE" = "You're not following anyone yet";
+"DISCOVER_PEOPLE" = "Discover People";
+"NO_FOLLOWERS" = "You don't have any followers yet";
+"SHARE_YOUR_PROFILE" = "Share Your Profile";
+"NO_SUGGESTIONS" = "No suggestions available";
+"TRY_AGAIN" = "Try Again";
+"FOLLOW" = "Follow";
+"FOLLOWING_BUTTON" = "Following";
+
+// Common
+"ERROR" = "Error";
+"RETRY" = "Try Again";
+"SHARE" = "Share";
+"BUY" = "Buy";
