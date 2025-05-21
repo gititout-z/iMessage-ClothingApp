@@ -1,0 +1,514 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54; // Updated to 54 for Xcode 12+ compatibility
+	objects = {
+
+/* Begin PBXBuildFile section */
+		// Swift files - Relative to iMessage-Extension group
+		BF_MVC_SWIFT = {isa = PBXBuildFile; fileRef = FR_MVC_SWIFT; };
+		// Authentication
+		BF_AUTH_SERVICE_SWIFT = {isa = PBXBuildFile; fileRef = FR_AUTH_SERVICE_SWIFT; };
+		BF_AUTH_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_AUTH_VIEW_SWIFT; };
+		BF_SIGNIN_APPLE_SWIFT = {isa = PBXBuildFile; fileRef = FR_SIGNIN_APPLE_SWIFT; };
+		BF_USER_SWIFT = {isa = PBXBuildFile; fileRef = FR_USER_SWIFT; };
+		// Camera
+		BF_CAMERA_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_CAMERA_VIEW_SWIFT; };
+		BF_CLOTHING_CAMERA_SWIFT = {isa = PBXBuildFile; fileRef = FR_CLOTHING_CAMERA_SWIFT; };
+		BF_CLOTHING_UPLOAD_SWIFT = {isa = PBXBuildFile; fileRef = FR_CLOTHING_UPLOAD_SWIFT; };
+		BF_IMG_PERM_HANDLER_SWIFT = {isa = PBXBuildFile; fileRef = FR_IMG_PERM_HANDLER_SWIFT; };
+		// Common
+		BF_ASYNC_IMG_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_ASYNC_IMG_VIEW_SWIFT; };
+		BF_CUSTOM_BUTTON_SWIFT = {isa = PBXBuildFile; fileRef = FR_CUSTOM_BUTTON_SWIFT; };
+		BF_EMPTY_STATE_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_EMPTY_STATE_VIEW_SWIFT; };
+		BF_ERROR_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_ERROR_VIEW_SWIFT; };
+		BF_IMG_PICKER_SWIFT = {isa = PBXBuildFile; fileRef = FR_IMG_PICKER_SWIFT; };
+		BF_IMG_PLACEHOLDER_SWIFT = {isa = PBXBuildFile; fileRef = FR_IMG_PLACEHOLDER_SWIFT; };
+		BF_KEYBOARD_RESPONDER_SWIFT = {isa = PBXBuildFile; fileRef = FR_KEYBOARD_RESPONDER_SWIFT; };
+		BF_LOADING_INDICATOR_SWIFT = {isa = PBXBuildFile; fileRef = FR_LOADING_INDICATOR_SWIFT; };
+		BF_MSG_COMPOSER_SWIFT = {isa = PBXBuildFile; fileRef = FR_MSG_COMPOSER_SWIFT; };
+		BF_MSG_SAFE_AREA_SWIFT = {isa = PBXBuildFile; fileRef = FR_MSG_SAFE_AREA_SWIFT; };
+		BF_ROUNDED_PROFILE_IMG_SWIFT = {isa = PBXBuildFile; fileRef = FR_ROUNDED_PROFILE_IMG_SWIFT; };
+		BF_TAG_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_TAG_VIEW_SWIFT; };
+		// Profile
+		BF_CLOTHING_GRID_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_CLOTHING_GRID_VIEW_SWIFT; };
+		BF_EDIT_PROFILE_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_EDIT_PROFILE_VIEW_SWIFT; };
+		BF_PROFILE_HEADER_SWIFT = {isa = PBXBuildFile; fileRef = FR_PROFILE_HEADER_SWIFT; };
+		BF_PROFILE_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_PROFILE_VIEW_SWIFT; };
+		// Search (UI)
+		BF_CLOTHING_MATCH_ROW_SWIFT = {isa = PBXBuildFile; fileRef = FR_CLOTHING_MATCH_ROW_SWIFT; };
+		BF_CLOTHING_PURCHASE_ROW_SWIFT = {isa = PBXBuildFile; fileRef = FR_CLOTHING_PURCHASE_ROW_SWIFT; };
+		BF_FILTER_OPTIONS_SWIFT = {isa = PBXBuildFile; fileRef = FR_FILTER_OPTIONS_SWIFT; };
+		BF_IMG_SEARCH_RESULTS_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_IMG_SEARCH_RESULTS_VIEW_SWIFT; };
+		BF_SEARCH_BAR_SWIFT = {isa = PBXBuildFile; fileRef = FR_SEARCH_BAR_SWIFT; };
+		BF_SEARCH_RESULTS_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_SEARCH_RESULTS_VIEW_SWIFT; };
+		BF_SEARCH_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_SEARCH_VIEW_SWIFT; };
+		BF_VISUAL_SEARCH_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_VISUAL_SEARCH_VIEW_SWIFT; };
+		// Services - Backend
+		BF_BACKEND_SWIFT = {isa = PBXBuildFile; fileRef = FR_BACKEND_SWIFT; };
+		BF_CLOUDKIT_MANAGER_SWIFT = {isa = PBXBuildFile; fileRef = FR_CLOUDKIT_MANAGER_SWIFT; };
+		BF_NETWORK_MONITOR_SWIFT = {isa = PBXBuildFile; fileRef = FR_NETWORK_MONITOR_SWIFT; };
+		// Services - Clothing
+		BF_CLOTHING_ITEM_SWIFT = {isa = PBXBuildFile; fileRef = FR_CLOTHING_ITEM_SWIFT; };
+		BF_CLOTHING_MATCH_SWIFT = {isa = PBXBuildFile; fileRef = FR_CLOTHING_MATCH_SWIFT; };
+		BF_CLOTHING_METADATA_SWIFT = {isa = PBXBuildFile; fileRef = FR_CLOTHING_METADATA_SWIFT; };
+		BF_CLOTHING_SERVICE_SWIFT = {isa = PBXBuildFile; fileRef = FR_CLOTHING_SERVICE_SWIFT; };
+		BF_COMMERCIAL_MATCH_SWIFT = {isa = PBXBuildFile; fileRef = FR_COMMERCIAL_MATCH_SWIFT; };
+		// Services - Image
+		BF_COREML_PROCESSING_SWIFT = {isa = PBXBuildFile; fileRef = FR_COREML_PROCESSING_SWIFT; };
+		BF_IMG_ANALYSIS_SWIFT = {isa = PBXBuildFile; fileRef = FR_IMG_ANALYSIS_SWIFT; };
+		BF_IMG_CACHE_SWIFT = {isa = PBXBuildFile; fileRef = FR_IMG_CACHE_SWIFT; };
+		BF_IMG_COMPRESSION_SWIFT = {isa = PBXBuildFile; fileRef = FR_IMG_COMPRESSION_SWIFT; };
+		BF_IMG_PROCESSOR_SWIFT = {isa = PBXBuildFile; fileRef = FR_IMG_PROCESSOR_SWIFT; };
+		BF_IMG_UPLOADER_SWIFT = {isa = PBXBuildFile; fileRef = FR_IMG_UPLOADER_SWIFT; };
+		BF_UIIMG_EXT_SWIFT = {isa = PBXBuildFile; fileRef = FR_UIIMG_EXT_SWIFT; };
+		BF_UIIMG_FILTER_SWIFT = {isa = PBXBuildFile; fileRef = FR_UIIMG_FILTER_SWIFT; };
+		// Services - Search
+		BF_IMG_EMBEDDING_SWIFT = {isa = PBXBuildFile; fileRef = FR_IMG_EMBEDDING_SWIFT; };
+		BF_SEARCH_SERVICE_SWIFT = {isa = PBXBuildFile; fileRef = FR_SEARCH_SERVICE_SWIFT; };
+		// Services - Social
+		BF_SOCIAL_SERVICE_SWIFT = {isa = PBXBuildFile; fileRef = FR_SOCIAL_SERVICE_SWIFT; };
+		// Social (UI)
+		BF_FOLLOW_BUTTON_SWIFT = {isa = PBXBuildFile; fileRef = FR_FOLLOW_BUTTON_SWIFT; };
+		BF_SOCIAL_MANAGER_SWIFT = {isa = PBXBuildFile; fileRef = FR_SOCIAL_MANAGER_SWIFT; };
+		BF_SOCIAL_VIEW_SWIFT = {isa = PBXBuildFile; fileRef = FR_SOCIAL_VIEW_SWIFT; };
+		BF_USER_ROW_SWIFT = {isa = PBXBuildFile; fileRef = FR_USER_ROW_SWIFT; };
+		// Utilities
+		BF_LOGGER_SWIFT = {isa = PBXBuildFile; fileRef = FR_LOGGER_SWIFT; };
+		BF_USERDEFAULTS_MGR_SWIFT = {isa = PBXBuildFile; fileRef = FR_USERDEFAULTS_MGR_SWIFT; };
+		// Utilities - Extensions
+		BF_COLOR_EXT_SWIFT = {isa = PBXBuildFile; fileRef = FR_COLOR_EXT_SWIFT; };
+		BF_DATE_EXT_SWIFT = {isa = PBXBuildFile; fileRef = FR_DATE_EXT_SWIFT; };
+		BF_STRING_EXT_SWIFT = {isa = PBXBuildFile; fileRef = FR_STRING_EXT_SWIFT; };
+		BF_VIEW_EXT_SWIFT = {isa = PBXBuildFile; fileRef = FR_VIEW_EXT_SWIFT; };
+
+		// Resources
+		BF_MAIN_STORYBOARD = {isa = PBXBuildFile; fileRef = FR_MAIN_STORYBOARD; };
+		BF_ASSETS_XCASSETS = {isa = PBXBuildFile; fileRef = FR_ASSETS_XCASSETS; };
+		BF_MVC_STORYBOARD_CONTENT = {isa = PBXBuildFile; fileRef = FR_MVC_STORYBOARD_CONTENT; };
+		BF_LOCALIZABLE_STRINGS = {isa = PBXBuildFile; fileRef = FR_LOCALIZABLE_STRINGS; };
+
+		// Frameworks
+		BF_MESSAGES_FRAMEWORK = {isa = PBXBuildFile; fileRef = FR_MESSAGES_FRAMEWORK; settings = {ATTRIBUTES = (Weak, ); }; };
+		BF_SWIFTUI_FRAMEWORK = {isa = PBXBuildFile; fileRef = FR_SWIFTUI_FRAMEWORK; };
+		BF_FOUNDATION_FRAMEWORK = {isa = PBXBuildFile; fileRef = FR_FOUNDATION_FRAMEWORK; };
+		BF_COMBINE_FRAMEWORK = {isa = PBXBuildFile; fileRef = FR_COMBINE_FRAMEWORK; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		// Product
+		FR_PRODUCT = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MessagesExtension.app; sourceTree = BUILT_PRODUCTS_DIR; };
+
+		// Swift files - Relative to iMessage-Extension group
+		FR_MVC_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessagesViewController.swift; path = MessagesExtension/MessagesViewController.swift; sourceTree = "<group>"; };
+		// Authentication
+		FR_AUTH_SERVICE_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthenticationService.swift; path = MessagesExtension/Authentication/AuthenticationService.swift; sourceTree = "<group>"; };
+		FR_AUTH_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthenticationView.swift; path = MessagesExtension/Authentication/AuthenticationView.swift; sourceTree = "<group>"; };
+		FR_SIGNIN_APPLE_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignInWithAppleButton.swift; path = MessagesExtension/Authentication/SignInWithAppleButton.swift; sourceTree = "<group>"; };
+		FR_USER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = MessagesExtension/Authentication/User.swift; sourceTree = "<group>"; };
+		// Camera
+		FR_CAMERA_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CameraView.swift; path = MessagesExtension/camera/CameraView.swift; sourceTree = "<group>"; };
+		FR_CLOTHING_CAMERA_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClothingCamera.swift; path = MessagesExtension/camera/ClothingCamera.swift; sourceTree = "<group>"; };
+		FR_CLOTHING_UPLOAD_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClothingUploadForm.swift; path = MessagesExtension/camera/ClothingUploadForm.swift; sourceTree = "<group>"; };
+		FR_IMG_PERM_HANDLER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImagePermissionsHandler.swift; path = MessagesExtension/camera/ImagePermissionsHandler.swift; sourceTree = "<group>"; };
+		// Common
+		FR_ASYNC_IMG_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AsyncImageView.swift; path = MessagesExtension/common/AsyncImageView.swift; sourceTree = "<group>"; };
+		FR_CUSTOM_BUTTON_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomButton.swift; path = MessagesExtension/common/CustomButton.swift; sourceTree = "<group>"; };
+		FR_EMPTY_STATE_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EmptyStateView.swift; path = MessagesExtension/common/EmptyStateView.swift; sourceTree = "<group>"; };
+		FR_ERROR_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ErrorView.swift; path = MessagesExtension/common/ErrorView.swift; sourceTree = "<group>"; };
+		FR_IMG_PICKER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImagePicker.swift; path = MessagesExtension/common/ImagePicker.swift; sourceTree = "<group>"; };
+		FR_IMG_PLACEHOLDER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImagePlaceholderView.swift; path = MessagesExtension/common/ImagePlaceholderView.swift; sourceTree = "<group>"; };
+		FR_KEYBOARD_RESPONDER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KeyboardResponder.swift; path = MessagesExtension/common/KeyboardResponder.swift; sourceTree = "<group>"; };
+		FR_LOADING_INDICATOR_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingIndicator.swift; path = MessagesExtension/common/LoadingIndicator.swift; sourceTree = "<group>"; };
+		FR_MSG_COMPOSER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessageComposer.swift; path = MessagesExtension/common/MessageComposer.swift; sourceTree = "<group>"; };
+		FR_MSG_SAFE_AREA_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MessageSafeArea.swift; path = MessagesExtension/common/MessageSafeArea.swift; sourceTree = "<group>"; };
+		FR_ROUNDED_PROFILE_IMG_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoundedProfileImage.swift; path = MessagesExtension/common/RoundedProfileImage.swift; sourceTree = "<group>"; };
+		FR_TAG_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TagView.swift; path = MessagesExtension/common/TagView.swift; sourceTree = "<group>"; };
+		// Profile
+		FR_CLOTHING_GRID_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClothingGridView.swift; path = MessagesExtension/profile/ClothingGridView.swift; sourceTree = "<group>"; };
+		FR_EDIT_PROFILE_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EditProfileView.swift; path = MessagesExtension/profile/EditProfileView.swift; sourceTree = "<group>"; };
+		FR_PROFILE_HEADER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileHeader.swift; path = MessagesExtension/profile/ProfileHeader.swift; sourceTree = "<group>"; };
+		FR_PROFILE_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileView.swift; path = MessagesExtension/profile/ProfileView.swift; sourceTree = "<group>"; };
+		// Search (UI)
+		FR_CLOTHING_MATCH_ROW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClothingMatchRow.swift; path = MessagesExtension/search/ClothingMatchRow.swift; sourceTree = "<group>"; };
+		FR_CLOTHING_PURCHASE_ROW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClothingPurchaseRow.swift; path = MessagesExtension/search/ClothingPurchaseRow.swift; sourceTree = "<group>"; };
+		FR_FILTER_OPTIONS_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilterOptions.swift; path = MessagesExtension/search/FilterOptions.swift; sourceTree = "<group>"; };
+		FR_IMG_SEARCH_RESULTS_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageSearchResultsView.swift; path = MessagesExtension/search/ImageSearchResultsView.swift; sourceTree = "<group>"; };
+		FR_SEARCH_BAR_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchBar.swift; path = MessagesExtension/search/SearchBar.swift; sourceTree = "<group>"; };
+		FR_SEARCH_RESULTS_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchResultsView.swift; path = MessagesExtension/search/SearchResultsView.swift; sourceTree = "<group>"; };
+		FR_SEARCH_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchView.swift; path = MessagesExtension/search/SearchView.swift; sourceTree = "<group>"; };
+		FR_VISUAL_SEARCH_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VisualSearchView.swift; path = MessagesExtension/search/VisualSearchView.swift; sourceTree = "<group>"; };
+		// Services - Backend
+		FR_BACKEND_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Backend.swift; path = MessagesExtension/services/backend/Backend.swift; sourceTree = "<group>"; };
+		FR_CLOUDKIT_MANAGER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CloudKitManager.swift; path = MessagesExtension/services/backend/CloudKitManager.swift; sourceTree = "<group>"; };
+		FR_NETWORK_MONITOR_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NetworkMonitor.swift; path = MessagesExtension/services/backend/NetworkMonitor.swift; sourceTree = "<group>"; };
+		// Services - Clothing
+		FR_CLOTHING_ITEM_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClothingItem.swift; path = MessagesExtension/services/clothing/ClothingItem.swift; sourceTree = "<group>"; };
+		FR_CLOTHING_MATCH_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClothingMatch.swift; path = MessagesExtension/services/clothing/ClothingMatch.swift; sourceTree = "<group>"; };
+		FR_CLOTHING_METADATA_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClothingMetadata.swift; path = MessagesExtension/services/clothing/ClothingMetadata.swift; sourceTree = "<group>"; };
+		FR_CLOTHING_SERVICE_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClothingService.swift; path = MessagesExtension/services/clothing/ClothingService.swift; sourceTree = "<group>"; };
+		FR_COMMERCIAL_MATCH_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CommercialMatch.swift; path = MessagesExtension/services/clothing/CommercialMatch.swift; sourceTree = "<group>"; };
+		// Services - Image
+		FR_COREML_PROCESSING_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreMLProcessing.swift; path = MessagesExtension/services/image/CoreMLProcessing.swift; sourceTree = "<group>"; };
+		FR_IMG_ANALYSIS_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageAnalysis.swift; path = MessagesExtension/services/image/ImageAnalysis.swift; sourceTree = "<group>"; };
+		FR_IMG_CACHE_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageCache.swift; path = MessagesExtension/services/image/ImageCache.swift; sourceTree = "<group>"; };
+		FR_IMG_COMPRESSION_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageCompression.swift; path = MessagesExtension/services/image/ImageCompression.swift; sourceTree = "<group>"; };
+		FR_IMG_PROCESSOR_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageProcessor.swift; path = MessagesExtension/services/image/ImageProcessor.swift; sourceTree = "<group>"; };
+		FR_IMG_UPLOADER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageUploader.swift; path = MessagesExtension/services/image/ImageUploader.swift; sourceTree = "<group>"; };
+		FR_UIIMG_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIImage+Extensions.swift; path = MessagesExtension/services/image/UIImage+Extensions.swift; sourceTree = "<group>"; };
+		FR_UIIMG_FILTER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIImage+Filtering.swift; path = MessagesExtension/services/image/UIImage+Filtering.swift; sourceTree = "<group>"; };
+		// Services - Search
+		FR_IMG_EMBEDDING_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageEmbedding.swift; path = MessagesExtension/services/search/ImageEmbedding.swift; sourceTree = "<group>"; };
+		FR_SEARCH_SERVICE_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchService.swift; path = MessagesExtension/services/search/SearchService.swift; sourceTree = "<group>"; };
+		// Services - Social
+		FR_SOCIAL_SERVICE_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocialService.swift; path = MessagesExtension/services/social/SocialService.swift; sourceTree = "<group>"; };
+		// Social (UI)
+		FR_FOLLOW_BUTTON_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FollowButton.swift; path = MessagesExtension/social/FollowButton.swift; sourceTree = "<group>"; };
+		FR_SOCIAL_MANAGER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocialManager.swift; path = MessagesExtension/social/SocialManager.swift; sourceTree = "<group>"; };
+		FR_SOCIAL_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocialView.swift; path = MessagesExtension/social/SocialView.swift; sourceTree = "<group>"; };
+		FR_USER_ROW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRow.swift; path = MessagesExtension/social/UserRow.swift; sourceTree = "<group>"; };
+		// Utilities
+		FR_LOGGER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = MessagesExtension/utillities/Logger.swift; sourceTree = "<group>"; }; // Note: fixed path from "utillities "
+		FR_USERDEFAULTS_MGR_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultsManager.swift; path = MessagesExtension/utillities/UserDefaultsManager.swift; sourceTree = "<group>"; };
+		// Utilities - Extensions
+		FR_COLOR_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorExtensions.swift; path = MessagesExtension/utillities/extensions/ColorExtensions.swift; sourceTree = "<group>"; };
+		FR_DATE_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DateExtensions.swift; path = MessagesExtension/utillities/extensions/DateExtensions.swift; sourceTree = "<group>"; };
+		FR_STRING_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringExtensions.swift; path = MessagesExtension/utillities/extensions/StringExtensions.swift; sourceTree = "<group>"; };
+		FR_VIEW_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewExtensions.swift; path = MessagesExtension/utillities/extensions/ViewExtensions.swift; sourceTree = "<group>"; };
+
+		// Storyboards
+		FR_MAIN_STORYBOARD = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = MainInterface.storyboard; path = MessagesExtension/MainInterface.storyboard; sourceTree = "<group>"; };
+		FR_MVC_STORYBOARD_CONTENT = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = MessagesViewController.storyboard-actualcontent; path = MessagesExtension/MessagesViewController.storyboard-actualcontent; sourceTree = "<group>"; };
+		
+		// Resources
+		FR_ASSETS_XCASSETS = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = resources/Assets.xcassets; sourceTree = "<group>"; };
+		FR_INFO_PLIST = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/Info.plist; sourceTree = "<group>"; };
+		FR_LOCALIZABLE_STRINGS = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = resources/Localizable.strings; sourceTree = "<group>"; };
+
+		// Configuration Files
+		FR_DEBUG_XCCONFIG = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = configuration/Debug.xcconfig; sourceTree = "<group>"; };
+		FR_RELEASE_XCCONFIG = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = configuration/Release.xcconfig; sourceTree = "<group>"; };
+		FR_ENTITLEMENTS = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MessagesExtension.entitlements; path = configuration/MessagesExtension.entitlements; sourceTree = "<group>"; };
+
+		// Frameworks (System)
+		FR_MESSAGES_FRAMEWORK = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
+		FR_SWIFTUI_FRAMEWORK = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		FR_FOUNDATION_FRAMEWORK = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FR_COMBINE_FRAMEWORK = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Combine.framework; path = System/Library/Frameworks/Combine.framework; sourceTree = SDKROOT; };
+
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		GROUP_ROOT = {
+			isa = PBXGroup;
+			children = (
+				GROUP_IMESSAGE_EXTENSION,
+				GROUP_PRODUCTS,
+			);
+			sourceTree = "<group>";
+		};
+
+		GROUP_PRODUCTS = {
+			isa = PBXGroup;
+			children = (
+				FR_PRODUCT,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+
+		GROUP_IMESSAGE_EXTENSION = {
+			isa = PBXGroup;
+			children = (
+				GROUP_MESSAGESEXTENSION_CODE,
+				GROUP_RESOURCES_MAIN,
+				GROUP_CONFIGURATION_FILES,
+				FR_MESSAGES_FRAMEWORK, // System frameworks at this level for visibility
+				FR_SWIFTUI_FRAMEWORK,
+				FR_FOUNDATION_FRAMEWORK,
+				FR_COMBINE_FRAMEWORK,
+			);
+			path = iMessage-Extension; // This group represents the iMessage-Extension folder itself
+			name = "iMessage-Extension";
+			sourceTree = "<group>"; // Relative to project root
+		};
+
+		GROUP_MESSAGESEXTENSION_CODE = {
+			isa = PBXGroup;
+			children = (
+				FR_MVC_SWIFT,
+				FR_MAIN_STORYBOARD,
+				FR_MVC_STORYBOARD_CONTENT,
+				GROUP_AUTHENTICATION,
+				GROUP_CAMERA,
+				GROUP_COMMON,
+				GROUP_PROFILE,
+				GROUP_SEARCH_UI,
+				GROUP_SERVICES,
+				GROUP_SOCIAL_UI,
+				GROUP_UTILITIES,
+			);
+			path = MessagesExtension; // Relative to parent group (iMessage-Extension)
+			name = MessagesExtension;
+			sourceTree = "<group>";
+		};
+
+		GROUP_AUTHENTICATION = {isa = PBXGroup; children = (FR_AUTH_SERVICE_SWIFT, FR_AUTH_VIEW_SWIFT, FR_SIGNIN_APPLE_SWIFT, FR_USER_SWIFT, ); path = MessagesExtension/Authentication; name = Authentication; sourceTree = "<group>"; };
+		GROUP_CAMERA = {isa = PBXGroup; children = (FR_CAMERA_VIEW_SWIFT, FR_CLOTHING_CAMERA_SWIFT, FR_CLOTHING_UPLOAD_SWIFT, FR_IMG_PERM_HANDLER_SWIFT, ); path = MessagesExtension/camera; name = camera; sourceTree = "<group>"; };
+		GROUP_COMMON = {isa = PBXGroup; children = (FR_ASYNC_IMG_VIEW_SWIFT, FR_CUSTOM_BUTTON_SWIFT, FR_EMPTY_STATE_VIEW_SWIFT, FR_ERROR_VIEW_SWIFT, FR_IMG_PICKER_SWIFT, FR_IMG_PLACEHOLDER_SWIFT, FR_KEYBOARD_RESPONDER_SWIFT, FR_LOADING_INDICATOR_SWIFT, FR_MSG_COMPOSER_SWIFT, FR_MSG_SAFE_AREA_SWIFT, FR_ROUNDED_PROFILE_IMG_SWIFT, FR_TAG_VIEW_SWIFT, ); path = MessagesExtension/common; name = common; sourceTree = "<group>"; };
+		GROUP_PROFILE = {isa = PBXGroup; children = (FR_CLOTHING_GRID_VIEW_SWIFT, FR_EDIT_PROFILE_VIEW_SWIFT, FR_PROFILE_HEADER_SWIFT, FR_PROFILE_VIEW_SWIFT, ); path = MessagesExtension/profile; name = profile; sourceTree = "<group>"; };
+		GROUP_SEARCH_UI = {isa = PBXGroup; children = (FR_CLOTHING_MATCH_ROW_SWIFT, FR_CLOTHING_PURCHASE_ROW_SWIFT, FR_FILTER_OPTIONS_SWIFT, FR_IMG_SEARCH_RESULTS_VIEW_SWIFT, FR_SEARCH_BAR_SWIFT, FR_SEARCH_RESULTS_VIEW_SWIFT, FR_SEARCH_VIEW_SWIFT, FR_VISUAL_SEARCH_VIEW_SWIFT, ); path = MessagesExtension/search; name = search; sourceTree = "<group>"; };
+		GROUP_SERVICES = {
+			isa = PBXGroup;
+			children = (
+				GROUP_SERVICES_BACKEND,
+				GROUP_SERVICES_CLOTHING,
+				GROUP_SERVICES_IMAGE,
+				GROUP_SERVICES_SEARCH,
+				GROUP_SERVICES_SOCIAL,
+			);
+			path = MessagesExtension/services;
+			name = services;
+			sourceTree = "<group>";
+		};
+		GROUP_SERVICES_BACKEND = {isa = PBXGroup; children = (FR_BACKEND_SWIFT, FR_CLOUDKIT_MANAGER_SWIFT, FR_NETWORK_MONITOR_SWIFT, ); path = MessagesExtension/services/backend; name = backend; sourceTree = "<group>"; };
+		GROUP_SERVICES_CLOTHING = {isa = PBXGroup; children = (FR_CLOTHING_ITEM_SWIFT, FR_CLOTHING_MATCH_SWIFT, FR_CLOTHING_METADATA_SWIFT, FR_CLOTHING_SERVICE_SWIFT, FR_COMMERCIAL_MATCH_SWIFT, ); path = MessagesExtension/services/clothing; name = clothing; sourceTree = "<group>"; };
+		GROUP_SERVICES_IMAGE = {isa = PBXGroup; children = (FR_COREML_PROCESSING_SWIFT, FR_IMG_ANALYSIS_SWIFT, FR_IMG_CACHE_SWIFT, FR_IMG_COMPRESSION_SWIFT, FR_IMG_PROCESSOR_SWIFT, FR_IMG_UPLOADER_SWIFT, FR_UIIMG_EXT_SWIFT, FR_UIIMG_FILTER_SWIFT, ); path = MessagesExtension/services/image; name = image; sourceTree = "<group>"; };
+		GROUP_SERVICES_SEARCH = {isa = PBXGroup; children = (FR_IMG_EMBEDDING_SWIFT, FR_SEARCH_SERVICE_SWIFT, ); path = MessagesExtension/services/search; name = search; sourceTree = "<group>"; };
+		GROUP_SERVICES_SOCIAL = {isa = PBXGroup; children = (FR_SOCIAL_SERVICE_SWIFT, ); path = MessagesExtension/services/social; name = social; sourceTree = "<group>"; };
+		GROUP_SOCIAL_UI = {isa = PBXGroup; children = (FR_FOLLOW_BUTTON_SWIFT, FR_SOCIAL_MANAGER_SWIFT, FR_SOCIAL_VIEW_SWIFT, FR_USER_ROW_SWIFT, ); path = MessagesExtension/social; name = social; sourceTree = "<group>"; }; // UI for social
+		GROUP_UTILITIES = {
+			isa = PBXGroup;
+			children = (
+				FR_LOGGER_SWIFT,
+				FR_USERDEFAULTS_MGR_SWIFT,
+				GROUP_UTILITIES_EXTENSIONS,
+			);
+			path = MessagesExtension/utillities; // Note: fixed path from "utillities "
+			name = utillities;
+			sourceTree = "<group>";
+		};
+		GROUP_UTILITIES_EXTENSIONS = {isa = PBXGroup; children = (FR_COLOR_EXT_SWIFT, FR_DATE_EXT_SWIFT, FR_STRING_EXT_SWIFT, FR_VIEW_EXT_SWIFT, ); path = MessagesExtension/utillities/extensions; name = extensions; sourceTree = "<group>"; };
+
+		GROUP_RESOURCES_MAIN = {
+			isa = PBXGroup;
+			children = (
+				FR_ASSETS_XCASSETS,
+				FR_INFO_PLIST,
+				FR_LOCALIZABLE_STRINGS,
+			);
+			path = resources; // Relative to parent group (iMessage-Extension)
+			name = Resources;
+			sourceTree = "<group>";
+		};
+
+		GROUP_CONFIGURATION_FILES = {
+			isa = PBXGroup;
+			children = (
+				FR_DEBUG_XCCONFIG,
+				FR_RELEASE_XCCONFIG,
+				FR_ENTITLEMENTS,
+			);
+			path = configuration; // Relative to parent group (iMessage-Extension)
+			name = Configuration;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		TARGET_MESSAGES_EXTENSION = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CONFIG_LIST_TARGET /* Build configuration list for PBXNativeTarget "MessagesExtension" */;
+			buildPhases = (
+				BUILD_PHASE_SOURCES,
+				BUILD_PHASE_FRAMEWORKS,
+				BUILD_PHASE_RESOURCES,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MessagesExtension;
+			productName = MessagesExtension;
+			productReference = FR_PRODUCT /* MessagesExtension.app */;
+			productType = "com.apple.product-type.app-extension.messages";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		PROJECT_OBJECT = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1300; // Example Xcode version for Swift update check
+				LastUpgradeCheck = 1300;     // Example Xcode version for general upgrade
+				TargetAttributes = {
+					TARGET_MESSAGES_EXTENSION = {
+						CreatedOnToolsVersion = 13.0; // Example
+						ProvisioningStyle = Automatic;
+						DefaultSwiftABI = swift5; // Or latest appropriate
+					};
+				};
+			};
+			buildConfigurationList = CONFIG_LIST_PROJECT /* Build configuration list for PBXProject */;
+			compatibilityVersion = "Xcode 9.3"; // Should be fine
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = GROUP_ROOT;
+			productRefGroup = GROUP_PRODUCTS;
+			projectDirPath = ""; // Relative to project file
+			projectRoot = "";    // Root of the project structure (where iMessage-Extension folder sits)
+			targets = (
+				TARGET_MESSAGES_EXTENSION,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BUILD_PHASE_SOURCES = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF_MVC_SWIFT, BF_AUTH_SERVICE_SWIFT, BF_AUTH_VIEW_SWIFT, BF_SIGNIN_APPLE_SWIFT, BF_USER_SWIFT,
+				BF_CAMERA_VIEW_SWIFT, BF_CLOTHING_CAMERA_SWIFT, BF_CLOTHING_UPLOAD_SWIFT, BF_IMG_PERM_HANDLER_SWIFT,
+				BF_ASYNC_IMG_VIEW_SWIFT, BF_CUSTOM_BUTTON_SWIFT, BF_EMPTY_STATE_VIEW_SWIFT, BF_ERROR_VIEW_SWIFT, BF_IMG_PICKER_SWIFT, BF_IMG_PLACEHOLDER_SWIFT, BF_KEYBOARD_RESPONDER_SWIFT, BF_LOADING_INDICATOR_SWIFT, BF_MSG_COMPOSER_SWIFT, BF_MSG_SAFE_AREA_SWIFT, BF_ROUNDED_PROFILE_IMG_SWIFT, BF_TAG_VIEW_SWIFT,
+				BF_CLOTHING_GRID_VIEW_SWIFT, BF_EDIT_PROFILE_VIEW_SWIFT, BF_PROFILE_HEADER_SWIFT, BF_PROFILE_VIEW_SWIFT,
+				BF_CLOTHING_MATCH_ROW_SWIFT, BF_CLOTHING_PURCHASE_ROW_SWIFT, BF_FILTER_OPTIONS_SWIFT, BF_IMG_SEARCH_RESULTS_VIEW_SWIFT, BF_SEARCH_BAR_SWIFT, BF_SEARCH_RESULTS_VIEW_SWIFT, BF_SEARCH_VIEW_SWIFT, BF_VISUAL_SEARCH_VIEW_SWIFT,
+				BF_BACKEND_SWIFT, BF_CLOUDKIT_MANAGER_SWIFT, BF_NETWORK_MONITOR_SWIFT,
+				BF_CLOTHING_ITEM_SWIFT, BF_CLOTHING_MATCH_SWIFT, BF_CLOTHING_METADATA_SWIFT, BF_CLOTHING_SERVICE_SWIFT, BF_COMMERCIAL_MATCH_SWIFT,
+				BF_COREML_PROCESSING_SWIFT, BF_IMG_ANALYSIS_SWIFT, BF_IMG_CACHE_SWIFT, BF_IMG_COMPRESSION_SWIFT, BF_IMG_PROCESSOR_SWIFT, BF_IMG_UPLOADER_SWIFT, BF_UIIMG_EXT_SWIFT, BF_UIIMG_FILTER_SWIFT,
+				BF_IMG_EMBEDDING_SWIFT, BF_SEARCH_SERVICE_SWIFT,
+				BF_SOCIAL_SERVICE_SWIFT,
+				BF_FOLLOW_BUTTON_SWIFT, BF_SOCIAL_MANAGER_SWIFT, BF_SOCIAL_VIEW_SWIFT, BF_USER_ROW_SWIFT,
+				BF_LOGGER_SWIFT, BF_USERDEFAULTS_MGR_SWIFT,
+				BF_COLOR_EXT_SWIFT, BF_DATE_EXT_SWIFT, BF_STRING_EXT_SWIFT, BF_VIEW_EXT_SWIFT,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BUILD_PHASE_FRAMEWORKS = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF_MESSAGES_FRAMEWORK,
+				BF_SWIFTUI_FRAMEWORK,
+				BF_FOUNDATION_FRAMEWORK,
+				BF_COMBINE_FRAMEWORK,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BUILD_PHASE_RESOURCES = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF_MAIN_STORYBOARD,
+				BF_ASSETS_XCASSETS,
+				BF_MVC_STORYBOARD_CONTENT,
+				BF_LOCALIZABLE_STRINGS,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CONFIG_TARGET_DEBUG = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FR_DEBUG_XCCONFIG;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; // Assuming AppIcon is in Assets.xcassets
+				CODE_SIGN_ENTITLEMENTS = "iMessage-Extension/configuration/MessagesExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ""; // Needs to be set by user
+				INFOPLIST_FILE = "iMessage-Extension/resources/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.ClothingApp.MessagesExtension"; // Placeholder
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES; // For Localizable.strings
+				SWIFT_VERSION = "5.0"; // Example, adjust as needed
+				TARGETED_DEVICE_FAMILY = "1,2"; // iPhone, iPad
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+                NSExtensionPrincipalClass = "$(PRODUCT_MODULE_NAME).MessagesViewController"; // Important for iMessage Ext
+                NSExtensionPointIdentifier = "com.apple.messages.message-app-extension"; // Important
+			};
+			name = Debug;
+		};
+		CONFIG_TARGET_RELEASE = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FR_RELEASE_XCCONFIG;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "iMessage-Extension/configuration/MessagesExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ""; // Needs to be set by user
+				INFOPLIST_FILE = "iMessage-Extension/resources/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.ClothingApp.MessagesExtension"; // Placeholder
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = "5.0"; // Example
+				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule"; // Or -Osize
+                NSExtensionPrincipalClass = "$(PRODUCT_MODULE_NAME).MessagesViewController";
+                NSExtensionPointIdentifier = "com.apple.messages.message-app-extension";
+			};
+			name = Release;
+		};
+		CONFIG_PROJECT_DEBUG = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CODE_SIGN_IDENTITY = "Apple Development"; // Or appropriate
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+			};
+			name = Debug;
+		};
+		CONFIG_PROJECT_RELEASE = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_IDENTITY = "Apple Development"; // Or appropriate
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CONFIG_LIST_PROJECT = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CONFIG_PROJECT_DEBUG,
+				CONFIG_PROJECT_RELEASE,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CONFIG_LIST_TARGET = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CONFIG_TARGET_DEBUG,
+				CONFIG_TARGET_RELEASE,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = PROJECT_OBJECT;
+}
