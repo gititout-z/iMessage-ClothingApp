@@ -1,0 +1,342 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FILE_BUILDFILE_MVC_SWIFT /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FILE_REF_MVC_SWIFT /* MessagesViewController.swift */; };
+		FILE_BUILDFILE_AUTH_SERVICE_SWIFT /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FILE_REF_AUTH_SERVICE_SWIFT /* AuthenticationService.swift */; };
+		FILE_BUILDFILE_AUTH_VIEW_SWIFT /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FILE_REF_AUTH_VIEW_SWIFT /* AuthenticationView.swift */; };
+		// ... (Repeat for ALL .swift files)
+		FILE_BUILDFILE_LOGGER_SWIFT /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FILE_REF_LOGGER_SWIFT /* Logger.swift */; };
+		FILE_BUILDFILE_CLOTHING_ITEM_SWIFT /* ClothingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FILE_REF_CLOTHING_ITEM_SWIFT /* ClothingItem.swift */; };
+
+
+		FILE_BUILDFILE_MAIN_STORYBOARD /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FILE_REF_MAIN_STORYBOARD /* MainInterface.storyboard */; };
+		FILE_BUILDFILE_ASSETS_XCASSETS /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FILE_REF_ASSETS_XCASSETS /* Assets.xcassets */; };
+		FILE_BUILDFILE_MVC_STORYBOARD_ACTUALCONTENT /* MessagesViewController.storyboard-actualcontent in Resources */ = {isa = PBXBuildFile; fileRef = FILE_REF_MVC_STORYBOARD_ACTUALCONTENT /* MessagesViewController.storyboard-actualcontent */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FILE_REF_APP_TARGET /* MessagesExtension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MessagesExtension.app; sourceTree = BUILT_PRODUCTS_DIR; };
+
+		FILE_REF_MVC_SWIFT /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesExtension/MessagesViewController.swift; sourceTree = "<group>"; };
+		FILE_REF_AUTH_SERVICE_SWIFT /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesExtension/Authentication/AuthenticationService.swift; sourceTree = "<group>"; };
+		FILE_REF_AUTH_VIEW_SWIFT /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesExtension/Authentication/AuthenticationView.swift; sourceTree = "<group>"; };
+		// ... (Repeat for ALL .swift files, ensure correct paths)
+		FILE_REF_LOGGER_SWIFT /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesExtension/utillities/Logger.swift; sourceTree = "<group>"; };
+		FILE_REF_CLOTHING_ITEM_SWIFT /* ClothingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesExtension/services/clothing/ClothingItem.swift; sourceTree = "<group>"; };
+
+
+		FILE_REF_MAIN_STORYBOARD /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MessagesExtension/MainInterface.storyboard; sourceTree = "<group>"; };
+		FILE_REF_ASSETS_XCASSETS /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = resources/Assets.xcassets; sourceTree = "<group>"; };
+		FILE_REF_INFO_PLIST /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = resources/Info.plist; sourceTree = "<group>"; };
+		FILE_REF_MVC_STORYBOARD_ACTUALCONTENT /* MessagesViewController.storyboard-actualcontent */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MessagesExtension/MessagesViewController.storyboard-actualcontent; sourceTree = "<group>"; };
+
+		FILE_REF_DEBUG_XCCONFIG /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = configuration/Debug.xcconfig; sourceTree = "<group>"; };
+		FILE_REF_RELEASE_XCCONFIG /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = configuration/Release.xcconfig; sourceTree = "<group>"; };
+		FILE_REF_ENTITLEMENTS /* MessagesExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = configuration/MessagesExtension.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		GROUP_MAIN /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				GROUP_IMESSAGE_EXTENSION /* iMessage-Extension */,
+				GROUP_PRODUCTS /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+
+		GROUP_PRODUCTS /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FILE_REF_APP_TARGET /* MessagesExtension.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+
+		GROUP_IMESSAGE_EXTENSION /* iMessage-Extension */ = {
+			isa = PBXGroup;
+			children = (
+				GROUP_MESSAGES_EXTENSION_CODE /* MessagesExtension */,
+				GROUP_RESOURCES /* Resources */,
+				GROUP_CONFIGURATION /* Configuration */,
+			);
+			path = iMessage-Extension;
+			name = iMessage-Extension;
+			sourceTree = "<group>";
+		};
+
+		GROUP_MESSAGES_EXTENSION_CODE /* MessagesExtension */ = {
+			isa = PBXGroup;
+			children = (
+				// Add individual file refs for files directly under MessagesExtension
+				FILE_REF_MVC_SWIFT /* MessagesViewController.swift */,
+				FILE_REF_MVC_STORYBOARD_ACTUALCONTENT /* MessagesViewController.storyboard-actualcontent */, // If treated as a resource within code area
+				FILE_REF_MAIN_STORYBOARD /* MainInterface.storyboard */, // Storyboard often here too
+
+				// Sub-groups for code structure
+				GROUP_AUTHENTICATION /* Authentication */,
+				GROUP_CAMERA /* Camera */,
+				// ... other functional groups like common, profile, search ...
+				GROUP_SERVICES /* services */,
+				GROUP_SOCIAL /* social */,
+				GROUP_UTILITIES /* utillities */,
+
+			);
+			path = MessagesExtension;
+			name = MessagesExtension;
+			sourceTree = "<group>";
+		};
+
+		GROUP_AUTHENTICATION /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				FILE_REF_AUTH_SERVICE_SWIFT /* AuthenticationService.swift */,
+				FILE_REF_AUTH_VIEW_SWIFT /* AuthenticationView.swift */,
+				// ... add other auth files
+			);
+			path = MessagesExtension/Authentication;
+			name = Authentication;
+			sourceTree = "<group>";
+		};
+		// ... (Repeat for ALL groups: Camera, Common, Profile, Search, Services (with sub-groups clothing, backend etc.), Social, Utilities)
+		GROUP_SERVICES_CLOTHING /* clothing */ = {
+			isa = PBXGroup;
+			children = (
+			  FILE_REF_CLOTHING_ITEM_SWIFT,
+			  // ... other clothing service files
+			);
+			path = MessagesExtension/services/clothing;
+			name = clothing;
+			sourceTree = "<group>";
+		};
+		GROUP_SERVICES /* services */ = {
+		    isa = PBXGroup;
+		    children = (
+		        GROUP_SERVICES_CLOTHING,
+		        // ... other service subgroups (backend, image, search, social)
+		    );
+		    path = MessagesExtension/services;
+		    name = services;
+		    sourceTree = "<group>";
+		};
+        GROUP_UTILITIES /* utillities */ = {
+            isa = PBXGroup;
+            children = (
+                FILE_REF_LOGGER_SWIFT,
+                // ... other utility files
+            );
+            path = MessagesExtension/utillities;
+            name = utillities;
+            sourceTree = "<group>";
+        };
+
+
+		GROUP_RESOURCES /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FILE_REF_ASSETS_XCASSETS /* Assets.xcassets */,
+				FILE_REF_INFO_PLIST /* Info.plist */,
+				// FILE_REF_MAIN_STORYBOARD, // Sometimes storyboard is here, sometimes with code
+			);
+			path = resources;
+			name = Resources;
+			sourceTree = "<group>";
+		};
+
+		GROUP_CONFIGURATION /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				FILE_REF_DEBUG_XCCONFIG /* Debug.xcconfig */,
+				FILE_REF_RELEASE_XCCONFIG /* Release.xcconfig */,
+				FILE_REF_ENTITLEMENTS /* MessagesExtension.entitlements */,
+			);
+			path = configuration;
+			name = Configuration;
+			sourceTree = "<group>";
+		};
+
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		TARGET_APP /* MessagesExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CONFIG_LIST_TARGET_APP /* Build configuration list for PBXNativeTarget "MessagesExtension" */;
+			buildPhases = (
+				BUILD_PHASE_SOURCES /* Sources */,
+				BUILD_PHASE_FRAMEWORKS /* Frameworks */,
+				BUILD_PHASE_RESOURCES /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MessagesExtension;
+			productName = MessagesExtension;
+			productReference = FILE_REF_APP_TARGET /* MessagesExtension.app */;
+			productType = "com.apple.product-type.app-extension.messages";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		PROJECT_ROOT /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1300; // Example Xcode version
+				TargetAttributes = {
+					TARGET_APP = {
+						CreatedOnToolsVersion = 13.0; // Example
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = CONFIG_LIST_PROJECT /* Build configuration list for PBXProject */ ;
+			compatibilityVersion = "Xcode 9.3"; // Example
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = GROUP_MAIN /* CustomTemplate */;
+			productRefGroup = GROUP_PRODUCTS /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				TARGET_APP /* MessagesExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BUILD_PHASE_SOURCES /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FILE_BUILDFILE_MVC_SWIFT /* MessagesViewController.swift in Sources */,
+				FILE_BUILDFILE_AUTH_SERVICE_SWIFT /* AuthenticationService.swift in Sources */,
+				FILE_BUILDFILE_AUTH_VIEW_SWIFT /* AuthenticationView.swift in Sources */,
+				// ... (Repeat for ALL .swift files)
+				FILE_BUILDFILE_LOGGER_SWIFT /* Logger.swift in Sources */,
+		        FILE_BUILDFILE_CLOTHING_ITEM_SWIFT /* ClothingItem.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BUILD_PHASE_FRAMEWORKS /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+                // Example: FILE_BUILDFILE_MESSAGES_FRAMEWORK /* Messages.framework in Frameworks */,
+                // Example: FILE_BUILDFILE_SWIFTUI_FRAMEWORK /* SwiftUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BUILD_PHASE_RESOURCES /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FILE_BUILDFILE_MAIN_STORYBOARD /* MainInterface.storyboard in Resources */,
+				FILE_BUILDFILE_ASSETS_XCASSETS /* Assets.xcassets in Resources */,
+				FILE_BUILDFILE_MVC_STORYBOARD_ACTUALCONTENT /* MessagesViewController.storyboard-actualcontent in Resources */,
+				// Info.plist is usually not here but set in build settings
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CONFIG_TARGET_DEBUG /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FILE_REF_DEBUG_XCCONFIG /* Debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "iMessage-Extension/configuration/MessagesExtension.entitlements"; // Path from project root
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "iMessage-Extension/resources/Info.plist"; // Path from project root
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.ClothingApp.MessagesExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = "5.0"; // Example
+				TARGETED_DEVICE_FAMILY = "1,2"; // iPhone, iPad
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CONFIG_TARGET_RELEASE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FILE_REF_RELEASE_XCCONFIG /* Release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "iMessage-Extension/configuration/MessagesExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "iMessage-Extension/resources/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.example.ClothingApp.MessagesExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = "5.0"; // Example
+				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		CONFIG_PROJECT_DEBUG /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				// ... many more project level settings ...
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		CONFIG_PROJECT_RELEASE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				// ... many more project level settings ...
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CONFIG_LIST_PROJECT /* Build configuration list for PBXProject */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CONFIG_PROJECT_DEBUG /* Debug */,
+				CONFIG_PROJECT_RELEASE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CONFIG_LIST_TARGET_APP /* Build configuration list for PBXNativeTarget "MessagesExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CONFIG_TARGET_DEBUG /* Debug */,
+				CONFIG_TARGET_RELEASE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = PROJECT_ROOT /* Project object */;
+}

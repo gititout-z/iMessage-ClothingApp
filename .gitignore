@@ -1,0 +1,12 @@
+# General
+.DS_Store
+*.swp
+
+# Xcode
+build/
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+*.xcuserdatad/
+DerivedData/
+*.moved-aside
+*.xcscheme
