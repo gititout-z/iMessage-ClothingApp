@@ -14,100 +14,17 @@ struct VisualSearchView: View {
     var body: some View {
         VStack(spacing: 20) {
             if let image = selectedImage {
-                // Show selected image with confirm button
-                VStack {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: 300)
-                        .cornerRadius(12)
-                    
-                    if isProcessing {
-                        ProgressView("Analyzing image...")
-                            .padding()
-                    } else {
-                        Button(action: {
-                            processImage(image)
-                        }) {
-                            Text("Search with this image")
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.accentColor)
-                                .cornerRadius(10)
-                        }
-                        .padding(.horizontal)
-                        
-                        Button(action: {
-                            selectedImage = nil
-                        }) {
-                            Text("Choose another image")
-                                .foregroundColor(.accentColor)
-                                .padding(.vertical, 8)
-                        }
-                    }
-                }
+                SelectedImageView(
+                    selectedImage: $selectedImage,
+                    isProcessing: $isProcessing,
+                    image: image,
+                    processAction: processImage
+                )
             } else {
-                // Show camera and library options
-                Spacer()
-                
-                Image(systemName: "magnifyingglass.circle.fill")
-                    .font(.system(size: 80))
-                    .foregroundColor(.accentColor)
-                
-                Text("Visual Search")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .padding(.bottom, 4)
-                
-                Text("Take a picture or select an image to find similar clothing items")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-                
-                Spacer()
-                
-                HStack(spacing: 30) {
-                    Button(action: {
-                        sourceType = .camera
-                        showImagePicker = true
-                    }) {
-                        VStack {
-                            Image(systemName: "camera.fill")
-                                .font(.system(size: 30))
-                                .foregroundColor(.white)
-                                .frame(width: 70, height: 70)
-                                .background(Color.accentColor)
-                                .clipShape(Circle())
-                            
-                            Text("Camera")
-                                .font(.caption)
-                                .padding(.top, 5)
-                        }
-                    }
-                    
-                    Button(action: {
-                        sourceType = .photoLibrary
-                        showImagePicker = true
-                    }) {
-                        VStack {
-                            Image(systemName: "photo.fill")
-                                .font(.system(size: 30))
-                                .foregroundColor(.white)
-                                .frame(width: 70, height: 70)
-                                .background(Color.accentColor)
-                                .clipShape(Circle())
-                            
-                            Text("Library")
-                                .font(.caption)
-                                .padding(.top, 5)
-                        }
-                    }
-                }
-                
-                Spacer()
+                ImageSourceSelectionView(
+                    showImagePicker: $showImagePicker,
+                    sourceType: $sourceType
+                )
             }
         }
         .padding(EdgeInsets(
@@ -128,6 +45,109 @@ struct VisualSearchView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             isProcessing = false
             onImageSelected(image)
+        }
+    }
+}
+
+// MARK: - Subviews for VisualSearchView
+private struct SelectedImageView: View {
+    @Binding var selectedImage: UIImage?
+    @Binding var isProcessing: Bool
+    let image: UIImage
+    let processAction: (UIImage) -> Void
+
+    var body: some View {
+        VStack {
+            Image(uiImage: image)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 300)
+                .cornerRadius(12)
+
+            if isProcessing {
+                ProgressView("Analyzing image...")
+                    .padding()
+            } else {
+                Button(action: { processAction(image) }) {
+                    Text("Search with this image")
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.accentColor)
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
+
+                Button(action: { selectedImage = nil }) {
+                    Text("Choose another image")
+                        .foregroundColor(.accentColor)
+                        .padding(.vertical, 8)
+                }
+            }
+        }
+    }
+}
+
+private struct ImageSourceSelectionView: View {
+    @Binding var showImagePicker: Bool
+    @Binding var sourceType: UIImagePickerController.SourceType
+
+    var body: some View {
+        VStack(spacing: 20) { // Added spacing to match original parent VStack
+            Spacer()
+
+            Image(systemName: "magnifyingglass.circle.fill")
+                .font(.system(size: 80))
+                .foregroundColor(.accentColor)
+
+            Text("Visual Search")
+                .font(.title2)
+                .fontWeight(.bold)
+                .padding(.bottom, 4)
+
+            Text("Take a picture or select an image to find similar clothing items")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+
+            Spacer()
+
+            HStack(spacing: 30) {
+                Button(action: {
+                    sourceType = .camera
+                    showImagePicker = true
+                }) {
+                    VStack {
+                        Image(systemName: "camera.fill")
+                            .font(.system(size: 30))
+                        Text("Camera")
+                            .font(.caption)
+                    }
+                    .frame(width: 70, height: 70) // Apply frame to content for consistent tap area
+                    .foregroundColor(.white)
+                    .background(Color.accentColor)
+                    .clipShape(Circle())
+                }
+
+                Button(action: {
+                    sourceType = .photoLibrary
+                    showImagePicker = true
+                }) {
+                    VStack {
+                        Image(systemName: "photo.fill")
+                            .font(.system(size: 30))
+                        Text("Library")
+                            .font(.caption)
+                    }
+                    .frame(width: 70, height: 70) // Apply frame to content
+                    .foregroundColor(.white)
+                    .background(Color.accentColor)
+                    .clipShape(Circle())
+                }
+            }
+            Spacer()
         }
     }
 }

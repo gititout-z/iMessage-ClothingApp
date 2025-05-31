@@ -64,26 +64,26 @@ class SocialService {
     }
     
     // Follow a user
-    func followUser(userId: String, completion: @escaping (Bool) -> Void) {
+    func followUser(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUser = AuthenticationService.shared.currentUser else {
-            completion(false)
+            completion(.failure(NSError(domain: "SocialService", code: 1, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])))
             return
         }
         
-        cloudKitManager.followUser(followerId: currentUser.id, followeeId: userId) { success in
-            completion(success)
+        cloudKitManager.followUser(followerId: currentUser.id, followeeId: userId) { result in
+            completion(result)
         }
     }
     
     // Unfollow a user
-    func unfollowUser(userId: String, completion: @escaping (Bool) -> Void) {
+    func unfollowUser(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUser = AuthenticationService.shared.currentUser else {
-            completion(false)
+            completion(.failure(NSError(domain: "SocialService", code: 1, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])))
             return
         }
         
-        cloudKitManager.unfollowUser(followerId: currentUser.id, followeeId: userId) { success in
-            completion(success)
+        cloudKitManager.unfollowUser(followerId: currentUser.id, followeeId: userId) { result in
+            completion(result)
         }
     }
     

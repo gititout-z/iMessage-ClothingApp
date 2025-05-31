@@ -23,62 +23,30 @@ struct ClothingUploadForm: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Image")) {
-                    HStack {
-                        Spacer()
-                        Image(uiImage: image)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 200)
-                        Spacer()
-                    }
-                }
+                ImageDisplaySection(image: image)
                 
-                Section(header: Text("Details")) {
-                    TextField("Description", text: $description)
-                    
-                    Picker("Category", selection: $category) {
-                        ForEach(categories, id: \.self) { category in
-                            Text(category).tag(category)
-                        }
-                    }
-                    
-                    TextField("Brand (optional)", text: $brand)
-                    
-                    TextField("Tags (comma separated)", text: $tags)
-                }
+                DetailsInputSection(
+                    description: $description,
+                    category: $category,
+                    categories: categories,
+                    brand: $brand,
+                    tags: $tags
+                )
                 
                 if let error = errorMessage {
                     Section {
-                        Text(error)
-                            .foregroundColor(.red)
+                        ErrorView(errorMessage: error, retryAction: uploadClothing)
                     }
                 }
                 
-                if uploadComplete {
-                    Section {
-                        Button(action: {
-                            showShareOptions = true
-                        }) {
-                            Label("Share in Conversation", systemImage: "square.and.arrow.up")
-                        }
-                    }
-                } else {
-                    Section {
-                        Button(action: uploadClothing) {
-                            if isUploading {
-                                HStack {
-                                    ProgressView()
-                                        .progressViewStyle(CircularProgressViewStyle())
-                                    Text("Uploading... \(Int(uploadProgress * 100))%")
-                                }
-                            } else {
-                                Text("Upload")
-                            }
-                        }
-                        .disabled(description.isEmpty || isUploading)
-                    }
-                }
+                ActionButtonsSection(
+                    uploadComplete: $uploadComplete,
+                    showShareOptions: $showShareOptions,
+                    uploadClothingAction: uploadClothing,
+                    isUploading: $isUploading,
+                    uploadProgress: $uploadProgress,
+                    description: $description
+                )
             }
             .navigationTitle("Add Clothing Item")
             .navigationBarItems(
@@ -131,25 +99,95 @@ struct ClothingUploadForm: View {
             season: nil // Optional
         )
         
-        // Simulate upload progress
-        var progress: Float = 0.0
-        let timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
-            progress += 0.05
-            
-            if progress >= 1.0 {
-                timer.invalidate()
-                completeUpload()
-            } else {
-                uploadProgress = progress
+        ClothingService.shared.uploadItem(image: image, metadata: metadata) { result in
+            DispatchQueue.main.async {
+                isUploading = false
+                switch result {
+                case .success(let uploadedItem):
+                    Logger.shared.info("Successfully uploaded item: \(uploadedItem.id)")
+                    uploadComplete = true
+                    // onCompletion() // Consider if onCompletion should be called here or by the Done button
+                case .failure(let error):
+                    Logger.shared.error("Failed to upload item: \(error.localizedDescription)")
+                    self.errorMessage = error.localizedDescription
+                    uploadComplete = false // Ensure this is reset
+                }
             }
         }
-        
-        // Simulating image upload and processing
-        // In a real app, you would use ImageUploader and ClothingService
-        func completeUpload() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                isUploading = false
-                uploadComplete = true
+    }
+}
+
+// MARK: - Subviews for ClothingUploadForm
+private struct ImageDisplaySection: View {
+    let image: UIImage
+
+    var body: some View {
+        Section(header: Text("Image")) {
+            HStack {
+                Spacer()
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 200)
+                Spacer()
+            }
+        }
+    }
+}
+
+private struct DetailsInputSection: View {
+    @Binding var description: String
+    @Binding var category: String
+    let categories: [String]
+    @Binding var brand: String
+    @Binding var tags: String
+
+    var body: some View {
+        Section(header: Text("Details")) {
+            TextField("Description", text: $description)
+            
+            Picker("Category", selection: $category) {
+                ForEach(categories, id: \.self) { categoryName in // Renamed to avoid conflict
+                    Text(categoryName).tag(categoryName)
+                }
+            }
+
+            TextField("Brand (optional)", text: $brand)
+
+            TextField("Tags (comma separated)", text: $tags)
+        }
+    }
+}
+
+private struct ActionButtonsSection: View {
+    @Binding var uploadComplete: Bool
+    @Binding var showShareOptions: Bool
+    let uploadClothingAction: () -> Void
+    @Binding var isUploading: Bool
+    @Binding var uploadProgress: Float
+    @Binding var description: String // For disabling button
+
+    var body: some View {
+        Section {
+            if uploadComplete {
+                Button(action: {
+                    showShareOptions = true
+                }) {
+                    Label("Share in Conversation", systemImage: "square.and.arrow.up")
+                }
+            } else {
+                Button(action: uploadClothingAction) {
+                    if isUploading {
+                        HStack {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                            Text("Uploading... \(Int(uploadProgress * 100))%")
+                        }
+                    } else {
+                        Text("Upload")
+                    }
+                }
+                .disabled(description.isEmpty || isUploading)
             }
         }
     }

@@ -27,7 +27,7 @@ extension Color {
             opacity: Double(a) / 255
         )
     }
-    
+
     // Convert Color to hex string
     var hexString: String {
         guard let components = UIColor(self).cgColor.components else { return "#000000" }
@@ -41,7 +41,7 @@ extension Color {
                       Int(g * 255),
                       Int(b * 255))
     }
-    
+
     // Determine if color is light or dark
     var isLight: Bool {
         guard let components = UIColor(self).cgColor.components else { return false }
@@ -53,7 +53,7 @@ extension Color {
         let brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000
         return brightness > 0.5
     }
-    
+
     // Get appropriate text color (black or white) for this background color
     var contrastingTextColor: Color {
         return isLight ? .black : .white

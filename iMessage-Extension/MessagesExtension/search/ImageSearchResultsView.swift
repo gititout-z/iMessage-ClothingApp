@@ -16,25 +16,7 @@ struct ImageSearchResultsView: View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    // Search image
-                    HStack {
-                        Spacer()
-                        
-                        VStack {
-                            Image(uiImage: searchImage)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 200)
-                                .cornerRadius(12)
-                            
-                            Text("Search Image")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                        
-                        Spacer()
-                    }
-                    .padding()
+                    DisplayedSearchImage(searchImage: searchImage) // Extracted View
                     
                     if isLoading {
                         LoadingIndicator(isLoading: true, text: "Finding matches...")
@@ -45,50 +27,8 @@ struct ImageSearchResultsView: View {
                         }
                         .frame(maxWidth: .infinity, minHeight: 200)
                     } else {
-                        // Social matches
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("From Your Network")
-                                .font(.headline)
-                                .padding(.horizontal)
-                            
-                            if socialMatches.isEmpty {
-                                Text("No matches found in your network")
-                                    .foregroundColor(.secondary)
-                                    .padding()
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                            } else {
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 12) {
-                                        ForEach(socialMatches) { match in
-                                            ClothingMatchRow(match: match, isHorizontal: true)
-                                                .frame(width: 260)
-                                        }
-                                    }
-                                    .padding(.horizontal)
-                                }
-                            }
-                        }
-                        
-                        // Commercial matches
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Shop Similar Items")
-                                .font(.headline)
-                                .padding(.horizontal)
-                            
-                            if commercialMatches.isEmpty {
-                                Text("No commercial matches found")
-                                    .foregroundColor(.secondary)
-                                    .padding()
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                            } else {
-                                VStack(spacing: 12) {
-                                    ForEach(commercialMatches) { match in
-                                        ClothingPurchaseRow(match: match)
-                                    }
-                                }
-                                .padding(.horizontal)
-                            }
-                        }
+                        SocialMatchesSection(socialMatches: socialMatches) // Extracted View
+                        CommercialMatchesSection(commercialMatches: commercialMatches) // Extracted View
                     }
                 }
                 .padding(.bottom, 16)
@@ -141,6 +81,85 @@ struct ImageSearchResultsView: View {
                     isLoading = false
                     errorMessage = "Image processing failed: \(error.localizedDescription)"
                 }
+            }
+        }
+    }
+}
+
+// MARK: - Subviews for ImageSearchResultsView
+private struct DisplayedSearchImage: View {
+    let searchImage: UIImage
+
+    var body: some View {
+        HStack {
+            Spacer()
+            VStack {
+                Image(uiImage: searchImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 200)
+                    .cornerRadius(12)
+
+                Text("Search Image")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
+        }
+        .padding()
+    }
+}
+
+private struct SocialMatchesSection: View {
+    let socialMatches: [ClothingMatch]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("From Your Network")
+                .font(.headline)
+                .padding(.horizontal)
+
+            if socialMatches.isEmpty {
+                Text("No matches found in your network")
+                    .foregroundColor(.secondary)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .center)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 12) {
+                        ForEach(socialMatches) { match in
+                            ClothingMatchRow(match: match, isHorizontal: true)
+                                .frame(width: 260)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+            }
+        }
+    }
+}
+
+private struct CommercialMatchesSection: View {
+    let commercialMatches: [CommercialMatch]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Shop Similar Items")
+                .font(.headline)
+                .padding(.horizontal)
+
+            if commercialMatches.isEmpty {
+                Text("No commercial matches found")
+                    .foregroundColor(.secondary)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .center)
+            } else {
+                VStack(spacing: 12) {
+                    ForEach(commercialMatches) { match in
+                        ClothingPurchaseRow(match: match)
+                    }
+                }
+                .padding(.horizontal)
             }
         }
     }

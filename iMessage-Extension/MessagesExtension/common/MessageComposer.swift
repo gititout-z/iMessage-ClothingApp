@@ -111,7 +111,7 @@ class MessageComposer {
     func sendMessage(_ message: MSMessage, in conversation: MSConversation) {
         conversation.insert(message) { error in
             if let error = error {
-                print("Error sending message: \(error.localizedDescription)")
+                Logger.shared.error("Error sending message: \(error.localizedDescription)")
             }
         }
     }

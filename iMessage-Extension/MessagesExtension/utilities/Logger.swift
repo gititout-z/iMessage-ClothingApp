@@ -8,7 +8,6 @@ enum LogLevel: String {
     case warning = "WARNING"
     case error = "ERROR"
 }
-
 class Logger {
     static let shared = Logger()
     
@@ -24,7 +23,7 @@ class Logger {
         self.isDebugMode = false
         #endif
     }
-    
+
     func debug(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
         if isDebugMode {
             log(level: .debug, message: message, file: file, function: function, line: line)

@@ -29,12 +29,21 @@ class SearchService {
         // For this implementation, we'll do a simple filter on local data
         
         // Simulate search delay
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
-            // Create sample data
-            let results = self.generateSampleSearchResults(query: query)
-            
-            DispatchQueue.main.async {
-                completion(.success(results))
+        backend.retry { operationCompletion in
+            DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) { // Shorter delay for individual attempt
+                // --- Start of simulated network operation ---
+                // if Int.random(in: 1...4) == 1 { // Simulate random network error
+                //     operationCompletion(.failure(SearchServiceError.networkError))
+                //     return
+                // }
+                let results = self.generateSampleSearchResults(query: query)
+                Logger.shared.info("SearchService: Simulated text search successful for query: \(query)")
+                operationCompletion(.success(results))
+                // --- End of simulated network operation ---
+            }
+        } completion: { result in
+            DispatchQueue.main.async { // Ensure final completion is on main thread
+                completion(result)
             }
         }
     }
@@ -45,13 +54,22 @@ class SearchService {
         // For this implementation, we'll return sample data
         
         // Simulate search delay
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1.5) {
-            // Create sample data
-            let socialResults = self.generateSampleSocialResults(embedding: embedding)
-            let commercialResults = self.generateSampleCommercialResults(embedding: embedding)
-            
-            DispatchQueue.main.async {
-                completion(.success((socialResults, commercialResults)))
+        backend.retry { operationCompletion in
+            DispatchQueue.global().asyncAfter(deadline: .now() + 0.7) { // Shorter delay for individual attempt
+                // --- Start of simulated network operation ---
+                // if Int.random(in: 1...4) == 1 { // Simulate random network error
+                //     operationCompletion(.failure(SearchServiceError.networkError))
+                //     return
+                // }
+                let socialResults = self.generateSampleSocialResults(embedding: embedding)
+                let commercialResults = self.generateSampleCommercialResults(embedding: embedding)
+                Logger.shared.info("SearchService: Simulated image search successful.")
+                operationCompletion(.success((socialResults, commercialResults)))
+                // --- End of simulated network operation ---
+            }
+        } completion: { result in
+            DispatchQueue.main.async { // Ensure final completion is on main thread
+                completion(result)
             }
         }
     }

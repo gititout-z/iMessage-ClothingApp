@@ -87,33 +87,33 @@ class SocialManager: ObservableObject {
         }
     }
     
-    func followUser(userId: String, completion: @escaping (Bool) -> Void) {
+    func followUser(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = AuthenticationService.shared.currentUser?.id else {
-            completion(false)
+            completion(.failure(NSError(domain: "SocialManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "User not authenticated to follow."])))
             return
         }
         
-        cloudKitManager.followUser(followerId: currentUserId, followeeId: userId) { success in
-            if success {
-                // Update local caches
+        cloudKitManager.followUser(followerId: currentUserId, followeeId: userId) { result in
+            if case .success = result {
+                // Update local caches on success
                 self.refreshFollowing()
             }
-            completion(success)
+            completion(result)
         }
     }
     
-    func unfollowUser(userId: String, completion: @escaping (Bool) -> Void) {
+    func unfollowUser(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let currentUserId = AuthenticationService.shared.currentUser?.id else {
-            completion(false)
+            completion(.failure(NSError(domain: "SocialManager", code: 1, userInfo: [NSLocalizedDescriptionKey: "User not authenticated to unfollow."])))
             return
         }
         
-        cloudKitManager.unfollowUser(followerId: currentUserId, followeeId: userId) { success in
-            if success {
-                // Update local caches
+        cloudKitManager.unfollowUser(followerId: currentUserId, followeeId: userId) { result in
+            if case .success = result {
+                // Update local caches on success
                 self.refreshFollowing()
             }
-            completion(success)
+            completion(result)
         }
     }
     

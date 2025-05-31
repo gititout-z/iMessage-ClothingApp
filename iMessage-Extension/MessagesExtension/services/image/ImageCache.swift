@@ -19,7 +19,7 @@ class ImageCache {
             do {
                 try fileManager.createDirectory(at: cacheDirectory, withIntermediateDirectories: true)
             } catch {
-                print("Error creating cache directory: \(error.localizedDescription)")
+                Logger.shared.error("Error creating cache directory: \(error.localizedDescription)")
             }
         }
         
@@ -51,7 +51,7 @@ class ImageCache {
         }
         
         // Download the image
-        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
             guard let self = self,
                   let data = data,
                   let image = UIImage(data: data) else {

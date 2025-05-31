@@ -121,7 +121,6 @@ struct SearchResultsView: View {
         }
     }
 }
-
 struct FilterChip: View {
     let title: String
     let isSelected: Bool

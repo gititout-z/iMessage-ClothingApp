@@ -7,10 +7,10 @@ import Combine // Added for observing authentication state
 class MessagesViewController: MSMessagesAppViewController {
     private let authService = AuthenticationService.shared
     private var cancellables = Set<AnyCancellable>() // To store Combine subscriptions
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Observe authentication changes
         authService.$isAuthenticated
             .receive(on: DispatchQueue.main) // Ensure UI updates are on the main thread
@@ -24,11 +24,11 @@ class MessagesViewController: MSMessagesAppViewController {
             }
             .store(in: &cancellables)
     }
-    
+
     override
     func willBecomeActive(with conversation: MSConversation) {
         super.willBecomeActive(with: conversation) // It's good practice to call super
-        
+
         // Active conversation contains the message send information
         // It is used to determine the presentation style.
         // This is the primary trigger for initial UI setup.
@@ -38,9 +38,9 @@ class MessagesViewController: MSMessagesAppViewController {
              self.presentViewController(for: conversation, with: self.presentationStyle)
         }
     }
-    
+
     // MARK: - Conversation Handling
-    
+
     private func presentViewController(for conversation: MSConversation, with presentationStyle: MSMessagesAppPresentationStyle) {
         // Ensure this runs on the main thread as it manipulates UI
         guard Thread.isMainThread else {
@@ -56,7 +56,7 @@ class MessagesViewController: MSMessagesAppViewController {
             child.view.removeFromSuperview()
             child.removeFromParent()
         }
-        
+
         let vc: UIViewController
         if authService.isAuthenticated, let user = authService.currentUser {
             // If user is authenticated, present the main interface
@@ -65,13 +65,13 @@ class MessagesViewController: MSMessagesAppViewController {
                 // And User is a struct/class that ProfileView expects
                 ProfileView(user: user) // You might need to ensure 'user' is @ObservedObject or @StateObject if it's a class
                     .tabItem { Label("Profile", systemImage: "person") }
-                
+
                 SearchView()
                     .tabItem { Label("Search", systemImage: "magnifyingglass") }
-                
+
                 CameraView()
                     .tabItem { Label("Add", systemImage: "plus") }
-                
+
                 SocialView()
                     .tabItem { Label("Social", systemImage: "person.2") }
             }
@@ -87,7 +87,7 @@ class MessagesViewController: MSMessagesAppViewController {
                 // which the Combine sink will pick up and re-trigger presentViewController.
                 // If not successful, an error might be displayed by AuthenticationView or handled by AuthenticationService.
                 if !isSuccessful {
-                    print("Authentication was not successful.")
+                    Logger.shared.info("AuthenticationView completion: Authentication was not successful.")
                     // Optionally, handle specific UI feedback here if needed, though errors
                     // are often better handled within AuthenticationService or AuthenticationView itself.
                 }
@@ -98,25 +98,24 @@ class MessagesViewController: MSMessagesAppViewController {
             }
             vc = UIHostingController(rootView: authView)
         }
-        
+
         addChild(vc)
         vc.view.frame = self.view.bounds
         vc.view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(vc.view)
-        
+
         NSLayoutConstraint.activate([
             vc.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             vc.view.rightAnchor.constraint(equalTo: self.view.rightAnchor),
             vc.view.topAnchor.constraint(equalTo: self.view.topAnchor),
             vc.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
-        
+
         vc.didMove(toParent: self)
     }
 
     // Removed `presentMainInterface(for user: User)` method.
     // UI updates are now driven by `willBecomeActive` and Combine subscription to `authService.$isAuthenticated`.
-
     // The following methods from MSMessagesAppViewController are often overridden:
     // override func didStartSending(_ message: MSMessage, conversation: MSConversation) { ... }
     // override func didCancelSending(_ message: MSMessage, conversation: MSConversation) { ... }

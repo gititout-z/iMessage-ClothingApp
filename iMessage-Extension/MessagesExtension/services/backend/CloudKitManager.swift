@@ -24,55 +24,62 @@ class CloudKitManager {
         publicDB = container.publicCloudDatabase
         privateDB = container.privateCloudDatabase
     }
-    
+
     // MARK: - User Operations
-    func fetchUser(with id: String, completion: @escaping (User?) -> Void) {
+    func fetchUser(with id: String, completion: @escaping (Result<User, Error>) -> Void) {
         let recordID = CKRecord.ID(recordName: id)
         
-        publicDB.fetch(withRecordID: recordID) { record, error in
-            if let error = error {
-                print("Error fetching user: \(error.localizedDescription)")
-                completion(nil)
-                return
+        Backend.shared.retry { operationCompletion in
+            self.publicDB.fetch(withRecordID: recordID) { record, error in
+                if let error = error {
+                    // Log original error before it's potentially transformed by Backend.handleNetworkError
+                    Logger.shared.error("CloudKitManager: Error fetching user record: \(error.localizedDescription)")
+                    operationCompletion(.failure(error))
+                } else if let record = record, let user = User.fromRecord(record) {
+                    operationCompletion(.success(user))
+                } else if record == nil && error == nil {
+                    // No record found, and no error - this is a specific case for fetch.
+                    // Backend.handleNetworkError might not convert this to a user-friendly "not found"
+                    // as it typically expects an actual error object.
+                    Logger.shared.info("CloudKitManager: User record not found for ID: \(id)")
+                    operationCompletion(.failure(CloudKitError.recordNotFound))
+                } else {
+                    Logger.shared.error("CloudKitManager: Failed to fetch user or convert record, record: \(String(describing: record)), error: \(String(describing: error))")
+                    operationCompletion(.failure(CloudKitError.invalidRecord)) // Or a more generic error
+                }
             }
-            
-            guard let record = record else {
-                completion(nil)
-                return
-            }
-            
-            let user = User.fromRecord(record)
-            completion(user)
+        } completion: { result in
+            completion(result) // This result will have gone through Backend.handleNetworkError if it was a failure
         }
     }
     
-    func saveUser(_ user: User, completion: @escaping (Bool, User?) -> Void) {
-        let record = user.toRecord()
+    func saveUser(_ user: User, completion: @escaping (Result<User, Error>) -> Void) {
+        let recordToSave = user.toRecord()
         
-        publicDB.save(record) { savedRecord, error in
-            if let error = error {
-                print("Error saving user: \(error.localizedDescription)")
-                completion(false, nil)
-                return
+        Backend.shared.retry { operationCompletion in
+            self.publicDB.save(recordToSave) { savedRecord, error in
+                if let error = error {
+                    Logger.shared.error("CloudKitManager: Error saving user record: \(error.localizedDescription)")
+                    operationCompletion(.failure(error))
+                } else if let savedRecord = savedRecord, let savedUser = User.fromRecord(savedRecord) {
+                    operationCompletion(.success(savedUser))
+                } else {
+                    Logger.shared.error("CloudKitManager: Failed to save user or convert saved record. Record: \(String(describing: savedRecord)), Error: \(String(describing: error))")
+                    operationCompletion(.failure(CloudKitError.operationFailed)) // Or a more generic error
+                }
             }
-            
-            guard let savedRecord = savedRecord,
-                  let savedUser = User.fromRecord(savedRecord) else {
-                completion(false, nil)
-                return
-            }
-            
-            completion(true, savedUser)
+        } completion: { result in
+            completion(result)
         }
     }
-    
+
     // MARK: - Clothing Operations
     func saveClothingItem(_ item: ClothingItem, completion: @escaping (Bool, ClothingItem?) -> Void) {
         let record = item.toRecord()
         
         publicDB.save(record) { savedRecord, error in
             if let error = error {
-                print("Error saving clothing item: \(error.localizedDescription)")
+                Logger.shared.error("Error saving clothing item: \(error.localizedDescription)")
                 completion(false, nil)
                 return
             }
@@ -133,7 +140,7 @@ class CloudKitManager {
             completion(error == nil)
         }
     }
-    
+
     // MARK: - Social Operations
     func fetchFollowers(userId: String, completion: @escaping (Result<[User], Error>) -> Void) {
         let predicate = NSPredicate(format: "followeeId == %@", userId)
@@ -220,27 +227,44 @@ class CloudKitManager {
         publicDB.add(operation)
     }
     
-    func followUser(followerId: String, followeeId: String, completion: @escaping (Bool) -> Void) {
-        // Create a new follow record
+    func followUser(followerId: String, followeeId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let recordID = CKRecord.ID(recordName: "\(followerId)-\(followeeId)")
         let record = CKRecord(recordType: "Follow", recordID: recordID)
         record["followerId"] = followerId
         record["followeeId"] = followeeId
         record["creationDate"] = Date()
         
-        publicDB.save(record) { _, error in
-            completion(error == nil)
+        Backend.shared.retry { operationCompletion in
+            self.publicDB.save(record) { _, error in
+                if let error = error {
+                    Logger.shared.error("CloudKitManager: Error saving follow record: \(error.localizedDescription)")
+                    operationCompletion(.failure(error))
+                } else {
+                    operationCompletion(.success(()))
+                }
+            }
+        } completion: { result in
+            completion(result)
         }
     }
     
-    func unfollowUser(followerId: String, followeeId: String, completion: @escaping (Bool) -> Void) {
+    func unfollowUser(followerId: String, followeeId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let recordID = CKRecord.ID(recordName: "\(followerId)-\(followeeId)")
         
-        publicDB.delete(withRecordID: recordID) { _, error in
-            completion(error == nil)
+        Backend.shared.retry { operationCompletion in
+            self.publicDB.delete(withRecordID: recordID) { _, error in
+                if let error = error {
+                    Logger.shared.error("CloudKitManager: Error deleting follow record: \(error.localizedDescription)")
+                    operationCompletion(.failure(error))
+                } else {
+                    operationCompletion(.success(()))
+                }
+            }
+        } completion: { result in
+            completion(result)
         }
     }
-    
+
     // MARK: - Helper Methods
     private func fetchUsers(withIds ids: [String], completion: @escaping (Result<[User], Error>) -> Void) {
         let recordIDs = ids.map { CKRecord.ID(recordName: $0) }

@@ -85,7 +85,7 @@ struct SocialView: View {
             loadData()
         }
     }
-    
+
     private var followingView: some View {
         VStack {
             if filteredFollowing.isEmpty {
@@ -106,7 +106,7 @@ struct SocialView: View {
             }
         }
     }
-    
+
     private var followersView: some View {
         VStack {
             if filteredFollowers.isEmpty {
@@ -127,7 +127,7 @@ struct SocialView: View {
             }
         }
     }
-    
+
     private var discoverView: some View {
         VStack {
             if filteredSuggestions.isEmpty {
@@ -148,7 +148,7 @@ struct SocialView: View {
             }
         }
     }
-    
+
     private func emptyStateView(message: String, buttonText: String) -> some View {
         VStack(spacing: 20) {
             Image(systemName: "person.2.slash")
@@ -177,7 +177,7 @@ struct SocialView: View {
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
     private var filteredFollowing: [User] {
         if searchText.isEmpty { return following }
         return following.filter { user in
@@ -185,7 +185,7 @@ struct SocialView: View {
             user.displayName.localizedCaseInsensitiveContains(searchText)
         }
     }
-    
+
     private var filteredFollowers: [User] {
         if searchText.isEmpty { return followers }
         return followers.filter { user in
@@ -193,7 +193,7 @@ struct SocialView: View {
             user.displayName.localizedCaseInsensitiveContains(searchText)
         }
     }
-    
+
     private var filteredSuggestions: [User] {
         if searchText.isEmpty { return suggestedUsers }
         return suggestedUsers.filter { user in
@@ -201,7 +201,7 @@ struct SocialView: View {
             user.displayName.localizedCaseInsensitiveContains(searchText)
         }
     }
-    
+
     private func loadData() {
         isLoading = true
         errorMessage = nil

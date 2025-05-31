@@ -62,8 +62,13 @@ class ClothingCamera: NSObject, ObservableObject {
         
         stillImageOutput = AVCapturePhotoOutput()
         
-        if captureSession?.canAddOutput(stillImageOutput!) == true {
-            captureSession?.addOutput(stillImageOutput!)
+        guard let stillImageOutput = self.stillImageOutput else {
+            Logger.shared.error("stillImageOutput is nil in setupCaptureSession")
+            return
+        }
+
+        if captureSession?.canAddOutput(stillImageOutput) == true {
+            captureSession?.addOutput(stillImageOutput)
         }
     }
     
@@ -107,7 +112,7 @@ class PhotoCaptureProcessor: NSObject, AVCapturePhotoCaptureDelegate {
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let error = error {
-            print("Error capturing photo: \(error.localizedDescription)")
+            Logger.shared.error("Error capturing photo: \(error.localizedDescription)")
             completion(nil)
             return
         }

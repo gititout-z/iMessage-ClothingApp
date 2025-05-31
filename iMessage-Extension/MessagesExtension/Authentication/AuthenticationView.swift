@@ -37,10 +37,8 @@ struct AuthenticationView: View {
                 .padding(.horizontal)
             
             // Error message
-            if let error = errorMessage ?? authService.authenticationError {
-                Text(error)
-                    .foregroundColor(.red)
-                    .font(.caption)
+            if let errorMsg = errorMessage ?? authService.authenticationError {
+                ErrorView(errorMessage: errorMsg, retryAction: signInTapped)
                     .padding(.top, 8)
             }
             
@@ -78,7 +76,12 @@ struct AuthenticationView: View {
             if success {
                 onAuthenticationSuccess()
             } else {
-                errorMessage = "Sign in failed. Please try again."
+                // Prioritize specific error from authService if available
+                if let specificError = authService.authenticationError, !specificError.isEmpty {
+                    errorMessage = specificError
+                } else {
+                    errorMessage = "Sign in failed. Please try again."
+                }
             }
         }
     }

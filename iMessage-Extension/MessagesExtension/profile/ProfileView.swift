@@ -60,7 +60,7 @@ struct ProfileView: View {
                             } else {
                                 ClothingGridView(items: filteredItems) { item in
                                     // Handle item selection
-                                    print("Selected item: \(item.id)")
+                                    Logger.shared.debug("Selected item: \(item.id)")
                                 }
                                 .padding(.horizontal)
                             }

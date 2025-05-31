@@ -7,6 +7,8 @@ struct FollowButton: View {
     
     @State private var isLoading = false
     @ObservedObject private var socialManager = SocialManager.shared
+    @State private var showErrorAlert: Bool = false
+    @State private var alertErrorMessage: String = ""
     
     var body: some View {
         Button(action: toggleFollow) {
@@ -28,28 +30,46 @@ struct FollowButton: View {
             }
         }
         .buttonStyle(PlainButtonStyle())
+        .alert(isPresented: $showErrorAlert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(alertErrorMessage),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
     
     private func toggleFollow() {
         isLoading = true
-        
+        errorMessage = "" // Clear previous error
+
         if isFollowing {
             // Unfollow
-            socialManager.unfollowUser(userId: userId) { success in
+            socialManager.unfollowUser(userId: userId) { result in
                 DispatchQueue.main.async {
                     isLoading = false
-                    if success {
+                    switch result {
+                    case .success:
                         isFollowing = false
+                    case .failure(let error):
+                        alertErrorMessage = error.localizedDescription
+                        showErrorAlert = true
+                        // isFollowing remains true as the operation failed
                     }
                 }
             }
         } else {
             // Follow
-            socialManager.followUser(userId: userId) { success in
+            socialManager.followUser(userId: userId) { result in
                 DispatchQueue.main.async {
                     isLoading = false
-                    if success {
+                    switch result {
+                    case .success:
                         isFollowing = true
+                    case .failure(let error):
+                        alertErrorMessage = error.localizedDescription
+                        showErrorAlert = true
+                        // isFollowing remains false as the operation failed
                     }
                 }
             }

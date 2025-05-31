@@ -170,7 +170,6 @@ struct SearchView: View {
     private let trendingCategories = ["Dresses", "Tops", "Pants", "Shoes", "Accessories"]
     private let recentSearches = ["blue jeans", "summer dress", "workout top", "denim jacket"]
 }
-
 struct SearchModeButton: View {
     let title: String
     let icon: String

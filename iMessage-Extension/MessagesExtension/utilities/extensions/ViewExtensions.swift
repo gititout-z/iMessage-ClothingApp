@@ -41,7 +41,6 @@ extension View {
         }
     }
 }
-
 // Helper shape for specific corner rounding
 struct RoundedCorner: Shape {
     var radius: CGFloat = .infinity

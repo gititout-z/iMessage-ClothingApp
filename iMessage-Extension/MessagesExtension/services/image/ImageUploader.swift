@@ -24,16 +24,31 @@ class ImageUploader {
         // In a real app, this would upload to a cloud storage
         // For this implementation, we'll simulate with a delay and fake URL
         
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1.5) {
-            // Generate a fake URL for the image
-            let imageId = UUID().uuidString
-            guard let fakeURL = URL(string: "https://example.com/images/\(imageId).jpg") else {
-                completion(.failure(ImageUploaderError.uploadFailed))
-                return
+        Backend.shared.retry { operationCompletion in
+            // Simulate actual network request for upload
+            DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) { // Shorter delay for individual attempt
+                // --- Start of simulated network operation ---
+                // Simulate a potential network error randomly (e.g. 25% chance)
+                // if Int.random(in: 1...4) == 1 {
+                //     Logger.shared.debug("ImageUploader: Simulating network error during upload.")
+                //     operationCompletion(.failure(NSError(domain: NSURLErrorDomain, code: NSURLErrorNetworkConnectionLost, userInfo: nil)))
+                //     return
+                // }
+
+                let imageId = UUID().uuidString
+                guard let fakeURL = URL(string: "https://example.com/images/\(imageId).jpg") else {
+                    Logger.shared.error("ImageUploader: Failed to create fake URL.")
+                    operationCompletion(.failure(ImageUploaderError.uploadFailed))
+                    return
+                }
+                Logger.shared.info("ImageUploader: Simulated image upload successful, URL: \(fakeURL.absoluteString)")
+                operationCompletion(.success(fakeURL))
+                // --- End of simulated network operation ---
             }
-            
-            DispatchQueue.main.async {
-                completion(.success(fakeURL))
+        } completion: { result in
+            // The result here has been processed by Backend.shared.retry (including error transformation)
+            DispatchQueue.main.async { // Ensure final completion is on main thread
+                completion(result)
             }
         }
     }

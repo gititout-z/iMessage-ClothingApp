@@ -9,7 +9,6 @@ class UserDefaultsManager {
     private init() {}
     
     // MARK: - Generic Get/Set Methods
-    
     func set<T>(_ value: T, forKey key: String) {
         defaults.set(value, forKey: key)
     }
@@ -17,9 +16,8 @@ class UserDefaultsManager {
     func get<T>(forKey key: String, defaultValue: T) -> T {
         return defaults.object(forKey: key) as? T ?? defaultValue
     }
-    
+
     // MARK: - Codable Support
-    
     func setCodable<T: Codable>(_ value: T, forKey key: String) {
         if let encoded = try? JSONEncoder().encode(value) {
             defaults.set(encoded, forKey: key)
@@ -30,9 +28,8 @@ class UserDefaultsManager {
         guard let data = defaults.data(forKey: key) else { return nil }
         return try? JSONDecoder().decode(T.self, from: data)
     }
-    
+
     // MARK: - Specific App Settings
-    
     var searchHistory: [String] {
         get { getCodable(forKey: "searchHistory") ?? [] }
         set { setCodable(newValue, forKey: "searchHistory") }
@@ -52,15 +49,19 @@ class UserDefaultsManager {
         get { getCodable(forKey: "selectedCategories") ?? [] }
         set { setCodable(newValue, forKey: "selectedCategories") }
     }
-    
+
     // MARK: - Clear Data
-    
     func clearSearchHistory() {
         searchHistory = []
     }
     
     func clearAllData() {
-        let domain = Bundle.main.bundleIdentifier!
+        guard let domain = Bundle.main.bundleIdentifier else {
+            Logger.shared.error("Bundle identifier is nil. Cannot clear UserDefaults for domain.")
+            // Optionally, clear all UserDefaults if domain is nil, though this is broader:
+            // defaults.dictionaryRepresentation().keys.forEach(defaults.removeObject(forKey:))
+            return
+        }
         defaults.removePersistentDomain(forName: domain)
     }
 }

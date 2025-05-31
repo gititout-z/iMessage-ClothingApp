@@ -170,18 +170,18 @@
 		FR_SOCIAL_VIEW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocialView.swift; path = MessagesExtension/social/SocialView.swift; sourceTree = "<group>"; };
 		FR_USER_ROW_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserRow.swift; path = MessagesExtension/social/UserRow.swift; sourceTree = "<group>"; };
 		// Utilities
-		FR_LOGGER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = MessagesExtension/utillities/Logger.swift; sourceTree = "<group>"; }; // Note: fixed path from "utillities "
-		FR_USERDEFAULTS_MGR_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultsManager.swift; path = MessagesExtension/utillities/UserDefaultsManager.swift; sourceTree = "<group>"; };
+		FR_LOGGER_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = MessagesExtension/utilities/Logger.swift; sourceTree = "<group>"; };
+		FR_USERDEFAULTS_MGR_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultsManager.swift; path = MessagesExtension/utilities/UserDefaultsManager.swift; sourceTree = "<group>"; };
 		// Utilities - Extensions
-		FR_COLOR_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorExtensions.swift; path = MessagesExtension/utillities/extensions/ColorExtensions.swift; sourceTree = "<group>"; };
-		FR_DATE_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DateExtensions.swift; path = MessagesExtension/utillities/extensions/DateExtensions.swift; sourceTree = "<group>"; };
-		FR_STRING_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringExtensions.swift; path = MessagesExtension/utillities/extensions/StringExtensions.swift; sourceTree = "<group>"; };
-		FR_VIEW_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewExtensions.swift; path = MessagesExtension/utillities/extensions/ViewExtensions.swift; sourceTree = "<group>"; };
+		FR_COLOR_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorExtensions.swift; path = MessagesExtension/utilities/extensions/ColorExtensions.swift; sourceTree = "<group>"; };
+		FR_DATE_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DateExtensions.swift; path = MessagesExtension/utilities/extensions/DateExtensions.swift; sourceTree = "<group>"; };
+		FR_STRING_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringExtensions.swift; path = MessagesExtension/utilities/extensions/StringExtensions.swift; sourceTree = "<group>"; };
+		FR_VIEW_EXT_SWIFT = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewExtensions.swift; path = MessagesExtension/utilities/extensions/ViewExtensions.swift; sourceTree = "<group>"; };
 
 		// Storyboards
 		FR_MAIN_STORYBOARD = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = MainInterface.storyboard; path = MessagesExtension/MainInterface.storyboard; sourceTree = "<group>"; };
 		FR_MVC_STORYBOARD_CONTENT = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = MessagesViewController.storyboard-actualcontent; path = MessagesExtension/MessagesViewController.storyboard-actualcontent; sourceTree = "<group>"; };
-		
+
 		// Resources
 		FR_ASSETS_XCASSETS = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = resources/Assets.xcassets; sourceTree = "<group>"; };
 		FR_INFO_PLIST = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = resources/Info.plist; sourceTree = "<group>"; };
@@ -286,11 +286,11 @@
 				FR_USERDEFAULTS_MGR_SWIFT,
 				GROUP_UTILITIES_EXTENSIONS,
 			);
-			path = MessagesExtension/utillities; // Note: fixed path from "utillities "
-			name = utillities;
+			path = MessagesExtension/utilities;
+			name = utilities;
 			sourceTree = "<group>";
 		};
-		GROUP_UTILITIES_EXTENSIONS = {isa = PBXGroup; children = (FR_COLOR_EXT_SWIFT, FR_DATE_EXT_SWIFT, FR_STRING_EXT_SWIFT, FR_VIEW_EXT_SWIFT, ); path = MessagesExtension/utillities/extensions; name = extensions; sourceTree = "<group>"; };
+		GROUP_UTILITIES_EXTENSIONS = {isa = PBXGroup; children = (FR_COLOR_EXT_SWIFT, FR_DATE_EXT_SWIFT, FR_STRING_EXT_SWIFT, FR_VIEW_EXT_SWIFT, ); path = MessagesExtension/utilities/extensions; name = extensions; sourceTree = "<group>"; };
 
 		GROUP_RESOURCES_MAIN = {
 			isa = PBXGroup;

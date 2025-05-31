@@ -48,8 +48,8 @@ struct ClothingItem: Identifiable, Codable, Equatable {
         let imageURLString = record["imageURL"] as? String
         let thumbnailURLString = record["thumbnailURL"] as? String
         
-        let imageURL = imageURLString != nil ? URL(string: imageURLString!) : nil
-        let thumbnailURL = thumbnailURLString != nil ? URL(string: thumbnailURLString!) : nil
+        let imageURL = imageURLString.flatMap { URL(string: $0) }
+        let thumbnailURL = thumbnailURLString.flatMap { URL(string: $0) }
         
         // Decode metadata
         var metadata = ClothingMetadata(description: "Unknown", category: "Other")

@@ -25,7 +25,7 @@ class CoreMLProcessing {
             
             DispatchQueue.main.async {
                 // Models "loaded"
-                print("CoreML models loaded successfully")
+                Logger.shared.info("CoreML models loaded successfully")
             }
         }
     }

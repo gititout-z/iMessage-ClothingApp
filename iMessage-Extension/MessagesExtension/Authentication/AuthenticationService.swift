@@ -21,7 +21,7 @@ class AuthenticationService: NSObject, ObservableObject {
     private override init() {
         super.init()
     }
-    
+
     // MARK: - Public Methods
     func checkAuthenticationStatus(completion: @escaping (Bool) -> Void) {
         if let userIdentifier = loadIdentifierFromKeychain() {
@@ -40,7 +40,7 @@ class AuthenticationService: NSObject, ObservableObject {
                 } else {
                     // User identifier was in Keychain, but user not found in CloudKit.
                     // This could mean data inconsistency. Clear Keychain for safety.
-                    print("User identifier found in Keychain, but user data not found in CloudKit. Clearing Keychain.")
+                    Logger.shared.warning("User identifier found in Keychain, but user data not found in CloudKit. Clearing Keychain.")
                     self.deleteIdentifierFromKeychain()
                     DispatchQueue.main.async {
                         self.isAuthenticated = false
@@ -86,13 +86,12 @@ class AuthenticationService: NSObject, ObservableObject {
     }
     
     // MARK: - Private Methods
-    
+
     // Removed restoreAuthentication as its logic is now in checkAuthenticationStatus with Keychain
     // Removed saveUserToDefaults as we now save identifier to Keychain
-
     private func saveIdentifierToKeychain(identifier: String) {
         guard let data = identifier.data(using: .utf8) else {
-            print("Keychain: Failed to convert identifier to data.")
+            Logger.shared.error("Keychain: Failed to convert identifier to data.")
             return
         }
 
@@ -109,9 +108,9 @@ class AuthenticationService: NSObject, ObservableObject {
 
         let status = SecItemAdd(query as CFDictionary, nil)
         if status == errSecSuccess {
-            print("Keychain: Identifier saved successfully.")
+            Logger.shared.info("Keychain: Identifier saved successfully.")
         } else {
-            print("Keychain: Error saving identifier - \(status)")
+            Logger.shared.error("Keychain: Error saving identifier - \(status)")
         }
     }
 
@@ -130,11 +129,11 @@ class AuthenticationService: NSObject, ObservableObject {
         if status == errSecSuccess {
             if let retrievedData = dataTypeRef as? Data,
                let identifier = String(data: retrievedData, encoding: .utf8) {
-                print("Keychain: Identifier loaded successfully.")
+                Logger.shared.info("Keychain: Identifier loaded successfully.")
                 return identifier
             }
         }
-        print("Keychain: No identifier found or error loading - \(status)")
+        Logger.shared.info("Keychain: No identifier found or error loading - \(status)")
         return nil
     }
 
@@ -147,23 +146,23 @@ class AuthenticationService: NSObject, ObservableObject {
 
         let status = SecItemDelete(query as CFDictionary)
         if status == errSecSuccess || status == errSecItemNotFound {
-            print("Keychain: Identifier deleted successfully or was not found.")
+            Logger.shared.info("Keychain: Identifier deleted successfully or was not found.")
         } else {
-            print("Keychain: Error deleting identifier - \(status)")
+            Logger.shared.error("Keychain: Error deleting identifier - \(status)")
         }
     }
     
     private func fetchUserFromCloudKit(userIdentifier: String, name: PersonNameComponents?, email: String?, completion: @escaping (User?) -> Void) {
         // First check if user exists
-        cloudKitManager.fetchUser(with: userIdentifier) { [weak self] existingUser in
+        cloudKitManager.fetchUser(with: userIdentifier) { [weak self] result in
             guard let self = self else { completion(nil); return }
-            if let user = existingUser {
-                // User exists, return it
+            switch result {
+            case .success(let user):
                 completion(user)
-            } else {
-                // Only create a new user if name and email are provided (i.e., during initial sign-up)
-                // If they are nil, it means we are just trying to fetch an existing user based on ID from Keychain.
-                if let name = name, let email = email {
+            case .failure(let error):
+                // If user not found, and we have name/email, it's a new user sign-up flow.
+                // Otherwise, it's an actual error or user genuinely not found during checkAuthenticationStatus.
+                if let name = name, let email = email, (error as? CloudKitError) == .recordNotFound || (error as? NSError)?.code == CKError.unknownItem.rawValue {
                     let newUser = User(
                         id: userIdentifier,
                         username: email.components(separatedBy: "@").first ?? "user_\(UUID().uuidString.prefix(8))",
@@ -172,13 +171,30 @@ class AuthenticationService: NSObject, ObservableObject {
                         avatarURL: nil,
                         joinDate: Date()
                     )
-                    
                     // Save to CloudKit
-                    self.cloudKitManager.saveUser(newUser) { success, savedUser in
-                        completion(success ? savedUser : nil)
+                    self.cloudKitManager.saveUser(newUser) { saveResult in
+                        switch saveResult {
+                        case .success(let savedUser):
+                            completion(savedUser)
+                        case .failure(let saveError):
+                            Logger.shared.error("Failed to save new user after initial fetch failed: \(saveError.localizedDescription)")
+                            DispatchQueue.main.async {
+                                self.authenticationError = saveError.localizedDescription
+                            }
+                            completion(nil)
+                        }
                     }
                 } else {
-                    // Name/email not provided, and user not found by ID. Cannot create.
+                    // User not found during a check, or other fetch error
+                    Logger.shared.error("Failed to fetch user: \(error.localizedDescription)")
+                    // Don't set authenticationError here if it's just a checkAuthenticationStatus "not found"
+                    // as that's an expected path if user is not in keychain.
+                    // Only set if name/email were present (implying sign-up context) or if error is not recordNotFound.
+                    if name != nil || email != nil || !((error as? CloudKitError) == .recordNotFound || (error as? NSError)?.code == CKError.unknownItem.rawValue) {
+                         DispatchQueue.main.async {
+                            self.authenticationError = error.localizedDescription
+                         }
+                    }
                     completion(nil)
                 }
             }
@@ -196,13 +212,13 @@ extension AuthenticationService: ASAuthorizationControllerDelegate {
             
             // Save the user identifier to Keychain
             saveIdentifierToKeychain(identifier: userIdentifier)
-            
+
             // Fetch or create user in CloudKit
             fetchUserFromCloudKit(userIdentifier: userIdentifier, name: fullName, email: email) { [weak self] user in
                 guard let self = self, let user = user else {
                     // If user couldn't be fetched/created, consider the sign-in incomplete.
                     // Potentially delete identifier from keychain if CloudKit step is essential for a valid session.
-                    self?.deleteIdentifierFromKeychain() 
+                    self?.deleteIdentifierFromKeychain()
                     self?.authenticationCompletionHandler?(false)
                     return
                 }
@@ -221,13 +237,13 @@ extension AuthenticationService: ASAuthorizationControllerDelegate {
             }
         } else {
             // Handle other credential types if necessary (e.g., ASPasswordCredential)
-            print("Received non-Apple ID credential.")
+            Logger.shared.warning("Received non-Apple ID credential.")
             authenticationCompletionHandler?(false)
         }
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("Authentication error: \(error.localizedDescription)")
+        Logger.shared.error("Authentication error: \(error.localizedDescription)")
         self.authenticationError = "Authentication failed. Please try again."
         self.authenticationCompletionHandler?(false)
     }
