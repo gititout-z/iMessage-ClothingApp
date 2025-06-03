@@ -64,7 +64,7 @@ Custom environment values to handle iMessage-specific constraints like safe area
 ### 3. Data Flow
 
 #### Backend Services
-- **Backend**: Central facade for backend services
+- **Backend**: Central facade for backend services. The `Backend` service acts as a crucial facade for most network operations. It implements a centralized retry mechanism with exponential backoff and standardizes error handling by transforming raw network or CloudKit errors into user-friendly `NSError` objects. All major services (`AuthenticationService`, `ClothingService`, `SocialService`, `ImageUploader`, `SearchService`) have been refactored to utilize `Backend.swift` for their network-dependent operations, ensuring consistent error handling and resilience.
 - **CloudKitManager**: CloudKit operations
 - **NetworkMonitor**: Network connectivity tracking
 
@@ -98,6 +98,7 @@ The app is optimized for the memory constraints of iMessage, with:
 - Proper cleanup of unused resources
 
 ### 2. Network Handling
+Robust error handling and retry logic are centralized in `Backend.swift`, which is used by all services making network requests. This includes:
 - Robust error handling
 - Retry logic with exponential backoff
 - Offline support with caching
@@ -136,7 +137,7 @@ The app is optimized for the memory constraints of iMessage, with:
 
 ### Authentication
 - Sign in with Apple for secure authentication
-- Proper token storage using Keychain
+- The Apple User Identifier (`userIdentifier`) obtained from Sign In with Apple is securely stored in the Keychain by `AuthenticationService.swift`. This identifier is used to re-authenticate and fetch user profile data from CloudKit. No other sensitive user tokens are stored.
 - Session management
 
 ### Data Protection
